@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Recipes.Data;
+using Recipes.Interfaces;
+using Recipes.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +17,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 
 var app = builder.Build();
 
