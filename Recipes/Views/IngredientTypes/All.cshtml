@@ -1,0 +1,23 @@
+﻿@model IEnumerable<IngredientTypeViewModel>
+
+@{
+    this.ViewData["Title"] = "Ingredient Types List";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ingredientType in this.Model)
+        {
+            <tr>
+                <td>@ingredientType.Id</td>
+                <td>@ingredientType.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

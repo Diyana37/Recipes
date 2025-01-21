@@ -1,0 +1,23 @@
+﻿@model IEnumerable<RecipeNationalityViewModel>
+
+@{
+    this.ViewData["Title"] = "Recipe Nationalities List";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var recipeNationality in this.Model)
+        {
+            <tr>
+                <td>@recipeNationality.Id</td>
+                <td>@recipeNationality.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

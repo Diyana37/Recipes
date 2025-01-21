@@ -1,0 +1,19 @@
+﻿@model CreateRecipeTypeInputModel
+
+@{
+    this.ViewData["Title"] = "Create Recipe Type Page";
+}
+
+<h1 class="text-center">Create Recipe Type</h1>
+
+<form method="post" asp-controller="RecipeTypes" asp-action="Create">
+    <div asp-validation-summary="All" class="alert-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name" class="alert-danger"></span>
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-primary mt-3" />
+</form>

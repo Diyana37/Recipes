@@ -18,6 +18,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<IIngredientTypesService, IngredientTypesService>();
+builder.Services.AddScoped<IRecipeNationalitiesService, RecipeNationalitiesService>();
+builder.Services.AddScoped<IRecipeTypesService, RecipeTypesService>();
 
 var app = builder.Build();
 
