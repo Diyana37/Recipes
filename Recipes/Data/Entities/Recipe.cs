@@ -40,14 +40,19 @@ namespace Recipes.Data.Entities
         [Url]
         public string Photo { get; set; }
 
+        [Required]
         public int RecipeTypeId { get; set; }
 
         public RecipeType RecipeType { get; set; }
 
+        [Required]
         public int RecipeNationalityId { get; set; }
+
         public RecipeNationality RecipeNationality { get; set; }
 
-        public int CategoryID { get; set; }
+        [Required]
+        public int CategoryId { get; set; }
+
         public Category Category { get; set; }
 
         public ICollection<RecipeIngredient> Ingredients { get; set; }

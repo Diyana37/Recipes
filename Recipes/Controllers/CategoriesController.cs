@@ -39,8 +39,5 @@ namespace Recipes.Controllers
 
             return this.RedirectToAction("All", "Categories");
         }
-
-
-
     }
 }

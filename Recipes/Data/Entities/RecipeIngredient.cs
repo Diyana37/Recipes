@@ -11,10 +11,14 @@ namespace Recipes.Data.Entities
         [MaxLength(50)]
         public string Quantity { get; set; }
 
+        [Required]
         public int RecipeId { get; set; }
+
         public Recipe Recipe { get; set; }
 
+        [Required]
         public int IngredientId { get; set; }
+
         public Ingredient Ingredient { get; set; }
     }
 }

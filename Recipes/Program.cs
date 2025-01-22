@@ -21,6 +21,7 @@ builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<IIngredientTypesService, IngredientTypesService>();
 builder.Services.AddScoped<IRecipeNationalitiesService, RecipeNationalitiesService>();
 builder.Services.AddScoped<IRecipeTypesService, RecipeTypesService>();
+builder.Services.AddScoped<IIngredientsService, IngredientsService>();
 
 var app = builder.Build();
 
