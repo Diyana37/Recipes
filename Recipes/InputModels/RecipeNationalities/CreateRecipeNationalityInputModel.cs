@@ -2,11 +2,8 @@
 
 namespace Recipes.InputModels.RecipeNationalities
 {
-    public class CreateRecipeNationalityInputModel
+    public class CreateRecipeNationalityInputModel : BaseRecipeNationalityInputModel
     {
-        [Required]
-        [MinLength(3)]
-        [MaxLength(50)]
-        public string Name { get; set; }
+        
     }
 }

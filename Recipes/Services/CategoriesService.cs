@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyModel;
 using Recipes.Data;
 using Recipes.Data.Entities;
 using Recipes.InputModels.Categories;
@@ -38,6 +37,18 @@ namespace Recipes.Services
             await this.dbContext.SaveChangesAsync();        
         }
 
+        public async Task EditAsync(EditCategoryInputModel editCategoryInputModel)
+        {
+            Category category = await this.dbContext.Categories
+                            .FirstOrDefaultAsync(c => c.Id == editCategoryInputModel.Id);
+
+            category.Name = editCategoryInputModel.Name;
+            
+            this.dbContext.Categories.Update(category);
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync()
         {
             IEnumerable<SelectListItem> selectListItems = await this.dbContext.Categories
@@ -62,6 +73,21 @@ namespace Recipes.Services
                 .ToListAsync();
 
             return categoryViewModels;
+        }
+
+        public async Task<EditCategoryInputModel> GetByIdAsync(int id)
+        {
+            EditCategoryInputModel editCategoryInputModel = await this.dbContext.Categories
+                .Where(c => c.Id == id)
+                .Select(c => new EditCategoryInputModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    
+                })
+                .FirstOrDefaultAsync();
+
+            return editCategoryInputModel;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Recipes.InputModels.Recipes;
+﻿using Recipes.InputModels.Recipes;
 using Recipes.ViewModels.Recipes;
 
 namespace Recipes.Interfaces
@@ -11,5 +10,9 @@ namespace Recipes.Interfaces
         Task<IEnumerable<RecipeViewModel>> GetAllAsync();
 
         Task DeleteAsync(int id);
+
+        Task EditAsync(EditRecipeInputModel editRecipeInputModel);
+
+        Task<EditRecipeInputModel> GetByIdAsync(int id);
     }
 }

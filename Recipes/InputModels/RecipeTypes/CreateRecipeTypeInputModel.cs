@@ -2,11 +2,8 @@
 
 namespace Recipes.InputModels.RecipeTypes
 {
-    public class CreateRecipeTypeInputModel
+    public class CreateRecipeTypeInputModel : BaseRecypeTypeInputModel
     {
-        [Required]
-        [MinLength(3)]
-        [MaxLength(50)]
-        public string Name { get; set; }
+        
     }
 }

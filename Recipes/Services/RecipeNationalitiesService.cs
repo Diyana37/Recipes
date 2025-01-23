@@ -37,6 +37,11 @@ namespace Recipes.Services
             await this.dbContext.SaveChangesAsync();
         }
 
+        public Task EditAsync(EditRecipeNationalityInputModel recipeNationalityInputModel)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync()
         {
             IEnumerable<SelectListItem> selectListItems = await this.dbContext.RecipeNationalities
@@ -60,6 +65,11 @@ namespace Recipes.Services
                 }).ToListAsync();
 
             return recipeNationalitiesViewModels;
+        }
+
+        public Task<EditRecipeNationalityInputModel> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
