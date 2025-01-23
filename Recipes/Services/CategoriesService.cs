@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Recipes.Data;
 using Recipes.Data.Entities;
 using Recipes.InputModels.Categories;
 using Recipes.Interfaces;
 using Recipes.ViewModels.Categories;
-using System.Runtime.InteropServices;
 
 namespace Recipes.Services
 {
@@ -25,6 +25,19 @@ namespace Recipes.Services
 
             await this.dbContext.AddAsync(category);
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync()
+        {
+            IEnumerable<SelectListItem> selectListItems = await this.dbContext.Categories
+                            .Select(i => new SelectListItem
+                            {
+                                Value = i.Id.ToString(),
+                                Text = i.Name,
+                            })
+                            .ToListAsync();
+
+            return selectListItems;
         }
 
         public async Task<IEnumerable<CategoryViewModel>> GetAllAsync()

@@ -1,4 +1,5 @@
-﻿using Recipes.InputModels.RecipeNationalities;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Recipes.InputModels.RecipeNationalities;
 using Recipes.ViewModels.RecipeNationalities;
 
 namespace Recipes.Interfaces
@@ -8,5 +9,7 @@ namespace Recipes.Interfaces
         Task CreateAsync(CreateRecipeNationalityInputModel createRecipeNationalityInputModel);
 
         Task<IEnumerable<RecipeNationalityViewModel>> GetAllAsync();
+
+        Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync();
     }
 }

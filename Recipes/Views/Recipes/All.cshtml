@@ -1,0 +1,45 @@
+﻿@model IEnumerable<RecipeViewModel>
+
+@{
+    this.ViewData["Title"] = "Recipes List";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Preparation time</th>
+            <th scope="col">Cooking time</th>
+            <th scope="col">Portions</th>
+            <th scope="col">Difficulty</th>
+            <th scope="col">Recipe Type Id</th>
+            <th scope="col">Recipe Type Name</th>
+            <th scope="col">Recipe Nationality Id</th>
+            <th scope="col">Recipe Nationality Name</th>
+            <th scope="col">Category Id</th>
+            <th scope="col">Category Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var recipe in this.Model)
+        {
+            <tr>
+                <td>@recipe.Id</td>
+                <td>@recipe.Name</td>
+                <td>@recipe.Description</td>
+                <td>@recipe.PreparationTime</td>
+                <td>@recipe.CookingTime</td>
+                <td>@recipe.Portions</td>
+                <td>@recipe.Difficulty</td>
+                <td>@recipe.RecipeTypeId</td>
+                <td>@recipe.RecipeTypeName</td>
+                <td>@recipe.RecipeNationalityId</td>
+                <td>@recipe.RecipeNationalityName</td>
+                <td>@recipe.CategoryId</td>
+                <td>@recipe.CategoryName</td>
+            </tr>
+        }
+    </tbody>
+</table>

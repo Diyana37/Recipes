@@ -1,4 +1,5 @@
-﻿using Recipes.InputModels.Categories;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Recipes.InputModels.Categories;
 using Recipes.ViewModels.Categories;
 
 namespace Recipes.Interfaces
@@ -8,5 +9,7 @@ namespace Recipes.Interfaces
         Task CreateAsync(CreateCategoryInputModel createCategoryInputModel);
 
         Task<IEnumerable<CategoryViewModel>> GetAllAsync();
+
+        Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync();
     }
 }

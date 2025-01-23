@@ -1,4 +1,5 @@
-﻿using Recipes.InputModels.RecipeTypes;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Recipes.InputModels.RecipeTypes;
 using Recipes.ViewModels.RecipeTypes;
 
 namespace Recipes.Interfaces
@@ -8,5 +9,8 @@ namespace Recipes.Interfaces
         Task CreateAsync(CreateRecipeTypeInputModel createRecipeTypeInputModel);
 
         Task<IEnumerable<RecipeTypeViewModel>> GetAllAsync();
+
+        Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync();
+
     }
 }
