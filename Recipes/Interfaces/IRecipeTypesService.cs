@@ -12,5 +12,6 @@ namespace Recipes.Interfaces
 
         Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync();
 
+        Task DeleteAsync(int id);
     }
 }

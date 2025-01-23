@@ -21,6 +21,9 @@
                 <td>@ingredient.Name</td>
                 <td>@ingredient.IngredientTypeId</td>
                 <td>@ingredient.IngredientTypeName</td>
+                <td>
+                    <a asp-controller="Ingredients" asp-action="Delete" asp-route-id="@ingredient.Id" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         }
     </tbody>

@@ -26,6 +26,16 @@ namespace Recipes.Services
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            Ingredient ingredient = await this.dbContext.Ingredients
+                            .FirstOrDefaultAsync(l => l.Id == id);
+
+            this.dbContext.Ingredients.Remove(ingredient);
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<IngredientViewModel>> GetAllAsync()
         {
             IEnumerable<IngredientViewModel> ingredientViewModels = await this.dbContext.Ingredients

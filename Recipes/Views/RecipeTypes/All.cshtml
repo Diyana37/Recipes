@@ -17,6 +17,9 @@
             <tr>
                 <td>@recipeType.Id</td>
                 <td>@recipeType.Name</td>
+                <td>
+                    <a asp-controller="RecipeTypes" asp-action="Delete" asp-route-id="@recipeType.Id" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         }
     </tbody>

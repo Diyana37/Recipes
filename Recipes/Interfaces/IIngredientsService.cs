@@ -8,5 +8,7 @@ namespace Recipes.Interfaces
         Task CreateAsync(CreateIngredientInputModel createIngredientInputModel);
 
         Task<IEnumerable<IngredientViewModel>> GetAllAsync();
+
+        Task DeleteAsync(int id);
     }
 }

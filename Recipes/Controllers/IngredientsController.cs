@@ -49,5 +49,13 @@ namespace Recipes.Controllers
 
             return this.RedirectToAction("All", "Ingredients");
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.ingredientsService.DeleteAsync(id);
+            this.TempData["Message"] = "Ingredient is deleted successfully!";
+
+            return this.RedirectToAction("All", "Ingredients");
+        }
     }
 }

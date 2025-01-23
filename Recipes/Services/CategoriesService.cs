@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyModel;
 using Recipes.Data;
 using Recipes.Data.Entities;
 using Recipes.InputModels.Categories;
@@ -25,6 +26,16 @@ namespace Recipes.Services
 
             await this.dbContext.AddAsync(category);
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            Category category = await this.dbContext.Categories
+                            .FirstOrDefaultAsync(l => l.Id == id);
+
+            this.dbContext.Categories.Remove(category);
+
+            await this.dbContext.SaveChangesAsync();        
         }
 
         public async Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync()
