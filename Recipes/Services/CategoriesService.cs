@@ -82,8 +82,7 @@ namespace Recipes.Services
                 .Select(c => new EditCategoryInputModel
                 {
                     Id = c.Id,
-                    Name = c.Name,
-                    
+                    Name = c.Name 
                 })
                 .FirstOrDefaultAsync();
 
