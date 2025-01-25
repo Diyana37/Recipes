@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Recipes.Data;
 using Recipes.Data.Entities;
-using Recipes.InputModels.Ingredients;
 using Recipes.InputModels.Recipes;
 using Recipes.Interfaces;
-using Recipes.ViewModels.Ingredients;
 using Recipes.ViewModels.Recipes;
 
 namespace Recipes.Services
 {
-    public class RecipesService : IRecipesServise
+    public class RecipesService : IRecipesService
     {
         private readonly ApplicationDbContext dbContext;
 
@@ -46,9 +44,24 @@ namespace Recipes.Services
             await this.dbContext.SaveChangesAsync();
         }
 
-        public Task EditAsync(EditRecipeInputModel editRecipeInputModel)
+        public async Task EditAsync(EditRecipeInputModel editRecipeInputModel)
         {
-            throw new NotImplementedException();
+            Recipe recipe = await this.dbContext.Recipes
+                            .FirstOrDefaultAsync(r => r.Id == editRecipeInputModel.Id);
+
+            recipe.Name = editRecipeInputModel.Name;
+            recipe.Description = editRecipeInputModel.Description;
+            recipe.PreparationTime = editRecipeInputModel.PreparationTime;
+            recipe.CookingTime = editRecipeInputModel.CookingTime;
+            recipe.Portions = editRecipeInputModel.Portions;
+            recipe.Difficulty = editRecipeInputModel.Difficulty;
+            recipe.RecipeTypeId = editRecipeInputModel.RecipeTypeId;
+            recipe.RecipeNationalityId = editRecipeInputModel.RecipeNationalityId;
+            recipe.CategoryId = editRecipeInputModel.CategoryId;
+
+            this.dbContext.Recipes.Update(recipe);
+
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<RecipeViewModel>> GetAllAsync()
@@ -78,9 +91,26 @@ namespace Recipes.Services
             return recipeViewModels;
         }
 
-        public Task<EditRecipeInputModel> GetByIdAsync(int id)
+        public async Task<EditRecipeInputModel> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            EditRecipeInputModel editRecipeInputModel = await this.dbContext.Recipes
+                .Where(r => r.Id == id)
+                .Select(r => new EditRecipeInputModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Description = r.Description,
+                    PreparationTime = r.PreparationTime,
+                    CookingTime = r.CookingTime,
+                    Portions = r.Portions,
+                    Difficulty = r.Difficulty,
+                    RecipeTypeId = r.RecipeTypeId,
+                    RecipeNationalityId = r.RecipeNationalityId,
+                    CategoryId = r.CategoryId
+                })
+                .FirstOrDefaultAsync();
+
+            return editRecipeInputModel;
         }
     }
 }
