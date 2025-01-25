@@ -50,10 +50,36 @@ namespace Recipes.Controllers
             return this.RedirectToAction("All", "Ingredients");
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            EditIngredientInputModel editIngredientInputModel = await this.ingredientsService
+                .GetByIdAsync(id);
+
+            editIngredientInputModel.IngredientTypeItems = await this.ingredientTypesService
+                    .GetAllAsItemsAsync();
+
+            return this.View(editIngredientInputModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditIngredientInputModel editIngredientInputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                editIngredientInputModel.IngredientTypeItems = await this.ingredientTypesService
+                    .GetAllAsItemsAsync();
+
+                return this.View(editIngredientInputModel);
+            }
+
+            await this.ingredientsService.EditAsync(editIngredientInputModel);
+
+            return this.RedirectToAction("All", "Ingredients");
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             await this.ingredientsService.DeleteAsync(id);
-            this.TempData["Message"] = "Ingredient is deleted successfully!";
 
             return this.RedirectToAction("All", "Ingredients");
         }

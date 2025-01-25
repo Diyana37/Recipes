@@ -36,9 +36,16 @@ namespace Recipes.Services
             await this.dbContext.SaveChangesAsync();
         }
 
-        public Task EditAsync(EditIngredientTypeInputModel editIngredientTypeInputModel)
+        public async Task EditAsync(EditIngredientTypeInputModel editIngredientTypeInputModel)
         {
-            throw new NotImplementedException();
+                IngredientType ingredientType = await this.dbContext.IngredientTypes
+                            .FirstOrDefaultAsync(i => i.Id == editIngredientTypeInputModel.Id);
+
+            ingredientType.Name = editIngredientTypeInputModel.Name;
+
+            this.dbContext.IngredientTypes.Update(ingredientType);
+
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync()
@@ -67,9 +74,18 @@ namespace Recipes.Services
             return ingredientTypeViewModels;
         }
 
-        public Task<EditIngredientTypeInputModel> GetByIdAsync(int id)
+        public async Task<EditIngredientTypeInputModel> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            EditIngredientTypeInputModel editIngredientTypeInputModel = await this.dbContext.IngredientTypes
+                .Where(i => i.Id == id)
+                .Select(i => new EditIngredientTypeInputModel
+                {
+                    Id = i.Id,
+                    Name = i.Name
+                })
+                .FirstOrDefaultAsync();
+
+            return editIngredientTypeInputModel;
         }
     }
 }

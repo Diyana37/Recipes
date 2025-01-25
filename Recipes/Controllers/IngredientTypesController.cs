@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Recipes.Data;
 using Recipes.InputModels.IngredientTypes;
 using Recipes.Interfaces;
-using Recipes.Services;
 using Recipes.ViewModels.IngredientTypes;
 
 namespace Recipes.Controllers
@@ -41,10 +39,30 @@ namespace Recipes.Controllers
             return this.RedirectToAction("All", "IngredientTypes");
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            EditIngredientTypeInputModel editIngredientTypeInputModel = await this.ingredientTypesService
+                .GetByIdAsync(id);
+
+            return this.View(editIngredientTypeInputModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditIngredientTypeInputModel editIngredientTypeInputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(editIngredientTypeInputModel);
+            }
+
+            await this.ingredientTypesService.EditAsync(editIngredientTypeInputModel);
+
+            return this.RedirectToAction("All", "IngredientTypes");
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             await this.ingredientTypesService.DeleteAsync(id);
-            this.TempData["Message"] = "Ingredient Type is deleted successfully!";
 
             return this.RedirectToAction("All", "IngredientTypes");
         }

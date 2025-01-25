@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Recipes.InputModels.Categories;
 using Recipes.Interfaces;
 using Recipes.ViewModels.Categories;
@@ -40,10 +39,30 @@ namespace Recipes.Controllers
             return this.RedirectToAction("All", "Categories");
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            EditCategoryInputModel editCategoryInputModel = await this.categoriesService
+                .GetByIdAsync(id);
+
+            return this.View(editCategoryInputModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditCategoryInputModel editCategoryInputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(editCategoryInputModel);
+            }
+
+            await this.categoriesService.EditAsync(editCategoryInputModel);
+
+            return this.RedirectToAction("All", "Categories");
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             await this.categoriesService.DeleteAsync(id);
-            this.TempData["Message"] = "Category is deleted successfully!";
 
             return this.RedirectToAction("All", "Categories");
         }
