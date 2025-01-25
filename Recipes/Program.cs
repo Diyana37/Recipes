@@ -22,7 +22,7 @@ builder.Services.AddScoped<IIngredientTypesService, IngredientTypesService>();
 builder.Services.AddScoped<IRecipeNationalitiesService, RecipeNationalitiesService>();
 builder.Services.AddScoped<IRecipeTypesService, RecipeTypesService>();
 builder.Services.AddScoped<IIngredientsService, IngredientsService>();
-builder.Services.AddScoped<IRecipesServise, RecipesService>();
+builder.Services.AddScoped<IRecipesService, RecipesService>();
 
 var app = builder.Build();
 

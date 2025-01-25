@@ -3,7 +3,7 @@ using Recipes.ViewModels.Recipes;
 
 namespace Recipes.Interfaces
 {
-    public interface IRecipesServise
+    public interface IRecipesService
     {
         Task CreateAsync(CreateRecipeInputModel createRecipeInputModel);
 
