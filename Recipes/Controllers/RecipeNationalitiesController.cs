@@ -40,10 +40,30 @@ namespace Recipes.Controllers
             return this.RedirectToAction("All", "RecipeNationalities");
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            EditRecipeNationalityInputModel editRecipeNationalityInputModel = await this.recipeNationalitiesService
+                .GetByIdAsync(id);
+
+            return this.View(editRecipeNationalityInputModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditRecipeNationalityInputModel editRecipeNationalityInputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(editRecipeNationalityInputModel);
+            }
+
+            await this.recipeNationalitiesService.EditAsync(editRecipeNationalityInputModel);
+
+            return this.RedirectToAction("All", "RecipeNationalities");
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             await this.recipeNationalitiesService.DeleteAsync(id);
-            this.TempData["Message"] = "Recipe Nationality is deleted successfully!";
 
             return this.RedirectToAction("All", "RecipeNationalities");
         }

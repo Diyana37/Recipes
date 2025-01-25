@@ -37,6 +37,18 @@ namespace Recipes.Services
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task EditAsync(EditRecypeTypeInputModel editRecypeTypeInputModel)
+        {
+            RecipeType recipeType = await this.dbContext.RecipeTypes
+                            .FirstOrDefaultAsync(r => r.Id == editRecypeTypeInputModel.Id);
+
+            recipeType.Name = editRecypeTypeInputModel.Name;
+
+            this.dbContext.RecipeTypes.Update(recipeType);
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync()
         {
             IEnumerable<SelectListItem> selectListItems = await this.dbContext.RecipeTypes
@@ -60,6 +72,20 @@ namespace Recipes.Services
                 }).ToListAsync();
 
             return recipeTypeViewModels;
+        }
+
+        public async Task<EditRecypeTypeInputModel> GetByIdAsync(int id)
+        {
+            EditRecypeTypeInputModel editRecypeTypeInputModel = await this.dbContext.RecipeTypes
+                .Where(r => r.Id == id)
+                .Select(r => new EditRecypeTypeInputModel
+                {
+                    Id = r.Id,
+                    Name = r.Name
+                })
+                .FirstOrDefaultAsync();
+
+            return editRecypeTypeInputModel;
         }
     }
 }

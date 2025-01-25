@@ -10,5 +10,9 @@ namespace Recipes.Interfaces
         Task<IEnumerable<IngredientViewModel>> GetAllAsync();
 
         Task DeleteAsync(int id);
+
+        Task EditAsync(EditIngredientInputModel editIngredientInputModel);
+
+        Task<EditIngredientInputModel> GetByIdAsync(int id);
     }
 }
