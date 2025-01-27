@@ -10,10 +10,12 @@ namespace Recipes.Services
     public class RecipesService : IRecipesService
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public RecipesService(ApplicationDbContext dbContext)
+        public RecipesService(ApplicationDbContext dbContext, ICloudinaryService cloudinaryService)
         {
             this.dbContext = dbContext;
+            this.cloudinaryService = cloudinaryService;
         }
         public async Task CreateAsync(CreateRecipeInputModel createRecipeInputModel)
         {
@@ -27,8 +29,16 @@ namespace Recipes.Services
                 Difficulty = createRecipeInputModel.Difficulty,
                 RecipeTypeId = createRecipeInputModel.RecipeTypeId,
                 RecipeNationalityId = createRecipeInputModel.RecipeNationalityId,
-                CategoryId = createRecipeInputModel.CategoryId,
+                CategoryId = createRecipeInputModel.CategoryId
             };
+
+            if (createRecipeInputModel.FormFile.Length > 0)
+            {
+                string photo = await this.cloudinaryService
+                    .UploadAsync(createRecipeInputModel.FormFile);
+
+                recipe.Photo = photo;
+            }
 
             await this.dbContext.AddAsync(recipe);
             await this.dbContext.SaveChangesAsync();
@@ -59,8 +69,15 @@ namespace Recipes.Services
             recipe.RecipeNationalityId = editRecipeInputModel.RecipeNationalityId;
             recipe.CategoryId = editRecipeInputModel.CategoryId;
 
-            this.dbContext.Recipes.Update(recipe);
+            if (editRecipeInputModel.FormFile.Length > 0)
+            {
+                string photo = await this.cloudinaryService
+                    .UploadAsync(editRecipeInputModel.FormFile);
 
+                recipe.Photo = photo;
+            }
+
+            this.dbContext.Recipes.Update(recipe);
             await this.dbContext.SaveChangesAsync();
         }
 
@@ -84,7 +101,8 @@ namespace Recipes.Services
                     RecipeNationalityId = r.RecipeNationalityId,
                     RecipeNationalityName = r.RecipeNationality.Name,
                     CategoryId = r.CategoryId,
-                    CategoryName = r.Category.Name
+                    CategoryName = r.Category.Name,
+                    Photo = r.Photo
                 })
                 .ToListAsync();
 
@@ -106,7 +124,8 @@ namespace Recipes.Services
                     Difficulty = r.Difficulty,
                     RecipeTypeId = r.RecipeTypeId,
                     RecipeNationalityId = r.RecipeNationalityId,
-                    CategoryId = r.CategoryId
+                    CategoryId = r.CategoryId,
+                    Photo = r.Photo
                 })
                 .FirstOrDefaultAsync();
 

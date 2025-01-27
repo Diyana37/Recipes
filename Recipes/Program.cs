@@ -23,6 +23,7 @@ builder.Services.AddScoped<IRecipeNationalitiesService, RecipeNationalitiesServi
 builder.Services.AddScoped<IRecipeTypesService, RecipeTypesService>();
 builder.Services.AddScoped<IIngredientsService, IngredientsService>();
 builder.Services.AddScoped<IRecipesService, RecipesService>();
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 
 var app = builder.Build();
 

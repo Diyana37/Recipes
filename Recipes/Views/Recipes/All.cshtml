@@ -14,6 +14,7 @@
             <th scope="col">Cooking time</th>
             <th scope="col">Portions</th>
             <th scope="col">Difficulty</th>
+            <th scope="col">Photo</th>
             <th scope="col">Recipe Type Id</th>
             <th scope="col">Recipe Type Name</th>
             <th scope="col">Recipe Nationality Id</th>
@@ -33,6 +34,18 @@
                 <td>@recipe.CookingTime</td>
                 <td>@recipe.Portions</td>
                 <td>@recipe.Difficulty</td>
+
+                @if (!string.IsNullOrWhiteSpace(recipe.Photo))
+                {
+                    <td>
+                        <img src="@recipe.Photo" alt="recipe" width="50" height="50" />
+                    </td>
+                }
+                else
+                {
+                    <td>No photo</td>
+                }
+
                 <td>@recipe.RecipeTypeId</td>
                 <td>@recipe.RecipeTypeName</td>
                 <td>@recipe.RecipeNationalityId</td>

@@ -18,8 +18,7 @@ namespace Recipes.ViewModels.Recipes
         
         public int Difficulty { get; set; }
 
-
-        //public string Photo { get; set; }
+        public string Photo { get; set; }
 
         public int RecipeTypeId { get; set; }
 

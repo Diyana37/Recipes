@@ -31,8 +31,7 @@ namespace Recipes.InputModels.Recipes
         [Range(1, 10)]
         public int Difficulty { get; set; }
 
-        //[Url]
-        //public string Photo { get; set; }
+        public IFormFile FormFile { get; set; }
 
         [Required]
         public int RecipeTypeId { get; set; }
