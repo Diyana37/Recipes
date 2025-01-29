@@ -15,12 +15,10 @@
             <th scope="col">Portions</th>
             <th scope="col">Difficulty</th>
             <th scope="col">Photo</th>
-            <th scope="col">Recipe Type Id</th>
             <th scope="col">Recipe Type Name</th>
-            <th scope="col">Recipe Nationality Id</th>
             <th scope="col">Recipe Nationality Name</th>
-            <th scope="col">Category Id</th>
             <th scope="col">Category Name</th>
+            <th scope="col">Ingredients</th>
         </tr>
     </thead>
     <tbody>
@@ -46,12 +44,18 @@
                     <td>No photo</td>
                 }
 
-                <td>@recipe.RecipeTypeId</td>
                 <td>@recipe.RecipeTypeName</td>
-                <td>@recipe.RecipeNationalityId</td>
                 <td>@recipe.RecipeNationalityName</td>
-                <td>@recipe.CategoryId</td>
                 <td>@recipe.CategoryName</td>
+                <td>
+                    <ul>
+                        @foreach (var ingredient in recipe.Ingredients)
+                        {
+                            <li>@ingredient.IngredientName - @ingredient.Quantity</li>
+                        }
+                    </ul>
+                </td>
+
                 <td>
                     <a asp-controller="Recipes" asp-action="Delete" asp-route-id="@recipe.Id" class="btn btn-danger">Delete</a>
                     <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-warning">Edit</a>

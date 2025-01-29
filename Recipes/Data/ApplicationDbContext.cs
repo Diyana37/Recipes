@@ -15,8 +15,6 @@ namespace Recipes.Data
 
         public DbSet<Ingredient> Ingredients { get; set; }
 
-        public DbSet<IngredientType> IngredientTypes { get; set; }
-
         public DbSet<Recipe> Recipes { get; set; }
 
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }

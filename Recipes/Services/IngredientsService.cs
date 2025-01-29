@@ -20,7 +20,6 @@ namespace Recipes.Services
             Ingredient ingredient = new Ingredient
             {
                 Name = createIngredientInputModel.Name,
-                IngredientTypeId = createIngredientInputModel.IngredientTypeId
             };
 
             await this.dbContext.AddAsync(ingredient);
@@ -43,7 +42,6 @@ namespace Recipes.Services
                             .FirstOrDefaultAsync(i => i.Id == editIngredientInputModel.Id);
 
             ingredient.Name = editIngredientInputModel.Name;
-            ingredient.IngredientTypeId = editIngredientInputModel.IngredientTypeId;
 
             this.dbContext.Ingredients.Update(ingredient);
 
@@ -53,13 +51,10 @@ namespace Recipes.Services
         public async Task<IEnumerable<IngredientViewModel>> GetAllAsync()
         {
             IEnumerable<IngredientViewModel> ingredientViewModels = await this.dbContext.Ingredients
-                .Include(i => i.IngredientType)
                 .Select(i => new IngredientViewModel
                 {
                     Id = i.Id,
-                    Name = i.Name,
-                    IngredientTypeId = i.IngredientTypeId,
-                    IngredientTypeName = i.IngredientType.Name
+                    Name = i.Name
                 })
                 .ToListAsync();
 
@@ -74,7 +69,6 @@ namespace Recipes.Services
                 {
                     Id = i.Id,
                     Name = i.Name,
-                    IngredientTypeId = i.IngredientTypeId
                 })
                 .FirstOrDefaultAsync();
 

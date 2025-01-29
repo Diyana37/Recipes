@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Recipes.ViewModels.RecipeIngredients;
+using System.ComponentModel.DataAnnotations;
 
 namespace Recipes.ViewModels.Recipes
 {
@@ -32,6 +33,6 @@ namespace Recipes.ViewModels.Recipes
 
         public string CategoryName { get; set; }
 
-
+        public IEnumerable<RecipeIngredientViewModel> Ingredients { get; set; }
     }
 }

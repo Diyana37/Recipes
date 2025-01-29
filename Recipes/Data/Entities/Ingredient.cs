@@ -15,11 +15,6 @@ namespace Recipes.Data.Entities
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [Required]
-        public int IngredientTypeId { get; set; }
-
-        public IngredientType IngredientType { get; set; }
-
         public ICollection<RecipeIngredient> Recipes { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Recipes.InputModels.IngredientTypes;
 using Recipes.InputModels.RecipeTypes;
 using Recipes.Interfaces;
 using Recipes.ViewModels.RecipeTypes;

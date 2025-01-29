@@ -8,12 +8,10 @@ namespace Recipes.Controllers
     public class IngredientsController : Controller
     {
         private readonly IIngredientsService ingredientsService;
-        private readonly IIngredientTypesService ingredientTypesService;
 
-        public IngredientsController(IIngredientsService ingredientsService, IIngredientTypesService ingredientTypesService)
+        public IngredientsController(IIngredientsService ingredientsService)
         {
             this.ingredientsService = ingredientsService;
-            this.ingredientTypesService = ingredientTypesService;
         }
 
         public async Task<IActionResult> All()
@@ -26,12 +24,7 @@ namespace Recipes.Controllers
 
         public async Task<IActionResult> Create()
         {
-            CreateIngredientInputModel createIngredientInputModel = new CreateIngredientInputModel
-            {
-                IngredientTypeItems = await this.ingredientTypesService.GetAllAsItemsAsync()
-            };
-
-            return this.View(createIngredientInputModel);
+            return this.View();
         }
 
         [HttpPost]
@@ -39,9 +32,6 @@ namespace Recipes.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                createIngredientInputModel.IngredientTypeItems = await this.ingredientTypesService
-                    .GetAllAsItemsAsync();
-
                 return this.View(createIngredientInputModel);
             }
 
@@ -55,9 +45,6 @@ namespace Recipes.Controllers
             EditIngredientInputModel editIngredientInputModel = await this.ingredientsService
                 .GetByIdAsync(id);
 
-            editIngredientInputModel.IngredientTypeItems = await this.ingredientTypesService
-                    .GetAllAsItemsAsync();
-
             return this.View(editIngredientInputModel);
         }
 
@@ -66,9 +53,6 @@ namespace Recipes.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                editIngredientInputModel.IngredientTypeItems = await this.ingredientTypesService
-                    .GetAllAsItemsAsync();
-
                 return this.View(editIngredientInputModel);
             }
 

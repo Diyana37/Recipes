@@ -15,6 +15,8 @@ namespace Recipes.InputModels.Recipes
         [MaxLength(1000)]
         public string Description { get; set; }
 
+        public string Ingredients { get; set; }
+
         [Required]
         [Range(3, 1000)]
         public int PreparationTime { get; set; }
