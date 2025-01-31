@@ -5,6 +5,7 @@ using Recipes.InputModels.Recipes;
 using Recipes.Interfaces;
 using Recipes.ViewModels.RecipeIngredients;
 using Recipes.ViewModels.Recipes;
+using System.Text;
 
 namespace Recipes.Services
 {
@@ -82,6 +83,9 @@ namespace Recipes.Services
 
             this.dbContext.Recipes.Update(recipe);
             await this.dbContext.SaveChangesAsync();
+
+            await this.RemoveRecipeIngredientsAsync(recipe.Id);
+            await this.SplitIngredientsAsync(editRecipeInputModel.Ingredients, recipe.Id);
         }
 
         public async Task<IEnumerable<RecipeViewModel>> GetAllAsync()
@@ -141,6 +145,8 @@ namespace Recipes.Services
                 })
                 .FirstOrDefaultAsync();
 
+            editRecipeInputModel.Ingredients = await this.BuildIngredientsTextAreaAsync(editRecipeInputModel.Id);
+
             return editRecipeInputModel;
         }
 
@@ -154,7 +160,7 @@ namespace Recipes.Services
                 {
                     string[] ingredientRow = item.Split('-');
 
-                    if (ingredientRow.Length > 0)
+                    if (ingredientRow.Length > 1)
                     {
                         string ingredientName = ingredientRow[0].Trim();
                         string quantity = ingredientRow[1].Trim();
@@ -191,6 +197,37 @@ namespace Recipes.Services
                     }
                 }
             }
+        }
+
+        private async Task<string> BuildIngredientsTextAreaAsync(int recipeId)
+        {
+            Recipe recipe = await this.dbContext.Recipes
+                            .Include(r => r.Ingredients)
+                            .ThenInclude(i => i.Ingredient)
+                            .FirstOrDefaultAsync(r => r.Id == recipeId);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                sb.AppendLine($"{ingredient.Ingredient.Name} - {ingredient.Quantity}");
+            }
+
+            return sb.ToString();
+        }
+
+        private async Task RemoveRecipeIngredientsAsync(int recipeId)
+        {
+            Recipe recipe = await this.dbContext.Recipes
+                            .Include(r => r.Ingredients)
+                            .ThenInclude(i => i.Ingredient)
+                            .FirstOrDefaultAsync(r => r.Id == recipeId);
+
+            IEnumerable<RecipeIngredient> recipeIngredients = recipe.Ingredients;
+
+            this.dbContext.RecipeIngredients.RemoveRange(recipeIngredients);
+
+            await this.dbContext.SaveChangesAsync();
         }
     }
 }
