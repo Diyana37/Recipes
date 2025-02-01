@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<RecipeTypeViewModel>
 
 @{
-    this.ViewData["Title"] = "Recipe Types List";
+    this.ViewData["Title"] = "Всички Типове";
 }
+
+<h1 class="text-center">Типове</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
+            <th scope="col">Номер</th>
+            <th scope="col">Име</th>
         </tr>
     </thead>
     <tbody>
@@ -18,8 +20,8 @@
                 <td>@recipeType.Id</td>
                 <td>@recipeType.Name</td>
                 <td>
-                    <a asp-controller="RecipeTypes" asp-action="Delete" asp-route-id="@recipeType.Id" class="btn btn-danger">Delete</a>
-                    <a asp-controller="RecipeTypes" asp-action="Edit" asp-route-id="@recipeType.Id" class="btn btn-warning">Edit</a>
+                    <a asp-controller="RecipeTypes" asp-action="Delete" asp-route-id="@recipeType.Id" class="btn btn-danger">Изтрий</a>
+                    <a asp-controller="RecipeTypes" asp-action="Edit" asp-route-id="@recipeType.Id" class="btn btn-warning">Редактирай</a>
                 </td>
             </tr>
         }

@@ -110,5 +110,20 @@ namespace Recipes.Controllers
 
             return this.RedirectToAction("All", "Recipes");
         }
+        public async Task<IActionResult> New()
+        {
+            IEnumerable<RecipeViewModel> recipeViewModels = await this.recipesService
+                .GetNewAsync();
+
+            return this.View(recipeViewModels);
+        }
+
+        public async Task<IActionResult> Random()
+        {
+            IEnumerable<RecipeViewModel> recipeViewModels = await this.recipesService
+                .GetRandomAsync();
+
+            return this.View(recipeViewModels);
+        }
     }
 }

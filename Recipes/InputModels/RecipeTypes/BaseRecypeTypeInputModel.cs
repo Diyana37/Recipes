@@ -4,9 +4,9 @@ namespace Recipes.InputModels.RecipeTypes
 {
     public class BaseRecypeTypeInputModel
     {
-        [Required]
-        [MinLength(3)]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Името е задължително!")]
+        [MinLength(3, ErrorMessage = "Името трябва да е минимум 3 символа!")]
+        [MaxLength(50, ErrorMessage = "Името трябва да е максимум 50 символа!")]
         public string Name { get; set; }
     }
 }

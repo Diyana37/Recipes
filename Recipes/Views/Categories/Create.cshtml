@@ -1,19 +1,19 @@
 ﻿@model CreateCategoryInputModel
 
 @{
-    this.ViewData["Title"] = "Create Category Page";
+    this.ViewData["Title"] = "Добавяне на Категория";
 }
 
-<h1 class="text-center">Create Category</h1>
+<h1 class="text-center">Добавяне на Категория</h1>
 
 <form method="post" asp-controller="Categories" asp-action="Create">
     <div asp-validation-summary="All" class="alert-danger"></div>
 
     <div class="form-group">
-        <label asp-for="Name"></label>
+        <label asp-for="Name">Име</label>
         <input class="form-control" asp-for="Name" />
         <span asp-validation-for="Name" class="alert-danger"></span>
     </div>
 
-    <input type="submit" value="Create" class="btn btn-primary mt-3" />
+    <input type="submit" value="Добави" class="btn btn-primary mt-3" />
 </form>

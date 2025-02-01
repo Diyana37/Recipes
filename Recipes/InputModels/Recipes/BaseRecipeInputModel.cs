@@ -5,45 +5,46 @@ namespace Recipes.InputModels.Recipes
 {
     public class BaseRecipeInputModel
     {
-        [Required]
-        [MinLength(3)]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Името е задължително!")]
+        [MinLength(3, ErrorMessage = "Името трябва да е минимум 3 символа!")]
+        [MaxLength(50, ErrorMessage = "Името трябва да е максимум 50 символа!")]
         public string Name { get; set; }
 
-        [Required]
-        [MinLength(3)]
-        [MaxLength(1000)]
+        [Required(ErrorMessage = "Описанието е задължително!")]
+        [MinLength(3, ErrorMessage = "Описанието трябва да е минимум 3 символа!")]
+        [MaxLength(1000, ErrorMessage = "Описанието трябва да е максимум 1000 символа!")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "Продуктите са задължителни!")]
         public string Ingredients { get; set; }
 
-        [Required]
-        [Range(3, 1000)]
+        [Required(ErrorMessage = "Времето за приготвяне е задължително!")]
+        [Range(3, 1000, ErrorMessage = "Времето за приготвяне трябва да е между 3 и 1000 символа!")]
         public int PreparationTime { get; set; }
 
-        [Required]
-        [Range(3, 1000)]
+        [Required(ErrorMessage = "Времето за готвене е задължително!")]
+        [Range(3, 1000, ErrorMessage = "Времето за готвене трябва да е между 3 и 1000 символа!")]
         public int CookingTime { get; set; }
 
-        [Required]
-        [Range(1, 100)]
+        [Required(ErrorMessage = "Порциите са задължителни!")]
+        [Range(1, 100, ErrorMessage = "Порциите трябва да са между 1 и 100 символа!")]
         public int Portions { get; set; }
 
-        [Required]
-        [Range(1, 10)]
+        [Required(ErrorMessage = "Трудността е задължителна!")]
+        [Range(1, 10, ErrorMessage = "Трудността трябва да е между 1 и 10 символа!")]
         public int Difficulty { get; set; }
 
         public IFormFile FormFile { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Типът е задължителен!")]
         public int RecipeTypeId { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Националността е задължителна!")]
         public int RecipeNationalityId { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Категорията е задължителна!")]
         public int CategoryId { get; set; }
 
         public IEnumerable<SelectListItem> RecipeTypeItems { get; set; }

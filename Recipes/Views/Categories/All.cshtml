@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<CategoryViewModel>
 
 @{
-    this.ViewData["Title"] = "Categories List";
+    this.ViewData["Title"] = "Всички Категории";
 }
+
+<h1 class="text-center">Категории</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
+            <th scope="col">Номер</th>
+            <th scope="col">Име</th>
         </tr>
     </thead>
     <tbody>
@@ -18,8 +20,8 @@
                 <td>@category.Id</td>
                 <td>@category.Name</td>
                 <td>
-                    <a asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger">Delete</a>
-                    <a asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger">Изтрий</a>
+                    <a asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-warning">Редактирай</a>
                 </td>
             </tr>
         }

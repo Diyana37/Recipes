@@ -14,5 +14,9 @@ namespace Recipes.Interfaces
         Task EditAsync(EditRecipeInputModel editRecipeInputModel);
 
         Task<EditRecipeInputModel> GetByIdAsync(int id);
+
+        Task<IEnumerable<RecipeViewModel>> GetNewAsync();
+
+        Task<IEnumerable<RecipeViewModel>> GetRandomAsync();
     }
 }
