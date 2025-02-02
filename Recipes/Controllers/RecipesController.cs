@@ -23,7 +23,7 @@ namespace Recipes.Controllers
             this.recipeNationalitiesService = recipeNationalitiesService;
             this.categoriesService = categoriesService;
         }
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> List()
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.recipesService
                 .GetAllAsync();
@@ -62,7 +62,7 @@ namespace Recipes.Controllers
 
             await this.recipesService.CreateAsync(createRecipeInputModel);
 
-            return this.RedirectToAction("All", "Recipes");
+            return this.RedirectToAction("List", "Recipes");
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -101,14 +101,14 @@ namespace Recipes.Controllers
 
             await this.recipesService.EditAsync(editRecipeInputModel);
 
-            return this.RedirectToAction("All", "Recipes");
+            return this.RedirectToAction("List", "Recipes");
         }
 
         public async Task<IActionResult> Delete(int id)
         {
             await this.recipesService.DeleteAsync(id);
 
-            return this.RedirectToAction("All", "Recipes");
+            return this.RedirectToAction("List", "Recipes");
         }
         public async Task<IActionResult> New()
         {
@@ -122,6 +122,14 @@ namespace Recipes.Controllers
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.recipesService
                 .GetRandomAsync();
+
+            return this.View(recipeViewModels);
+        }
+
+        public async Task<IActionResult> FilteredWithPagination()
+        {
+            IEnumerable<RecipeViewModel> recipeViewModels = await this.recipesService
+                .GetFilteredWithPaginationAsync();
 
             return this.View(recipeViewModels);
         }

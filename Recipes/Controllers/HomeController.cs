@@ -15,7 +15,7 @@ namespace Recipes.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return this.RedirectToAction("FilteredWithPagination", "Recipes");
         }
 
         public IActionResult Privacy()

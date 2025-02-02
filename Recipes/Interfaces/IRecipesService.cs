@@ -18,5 +18,7 @@ namespace Recipes.Interfaces
         Task<IEnumerable<RecipeViewModel>> GetNewAsync();
 
         Task<IEnumerable<RecipeViewModel>> GetRandomAsync();
+
+        Task<IEnumerable<RecipeViewModel>> GetFilteredWithPaginationAsync();
     }
 }

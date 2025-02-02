@@ -199,6 +199,43 @@ namespace Recipes.Services
             }
         }
 
+        public async Task<IEnumerable<RecipeViewModel>> GetFilteredWithPaginationAsync()
+        {
+            IEnumerable<RecipeViewModel> recipeViewModels = await this.dbContext.Recipes
+                .Include(r => r.RecipeType)
+                .Include(r => r.RecipeNationality)
+                .Include(r => r.Category)
+                .Include(r => r.Ingredients)
+                .ThenInclude(i => i.Ingredient)
+                .Select(r => new RecipeViewModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Description = r.Description,
+                    PreparationTime = r.PreparationTime,
+                    CookingTime = r.CookingTime,
+                    Portions = r.Portions,
+                    Difficulty = r.Difficulty,
+                    RecipeTypeId = r.RecipeTypeId,
+                    RecipeTypeName = r.RecipeType.Name,
+                    RecipeNationalityId = r.RecipeNationalityId,
+                    RecipeNationalityName = r.RecipeNationality.Name,
+                    CategoryId = r.CategoryId,
+                    CategoryName = r.Category.Name,
+                    Photo = r.Photo,
+                    Ingredients = r.Ingredients
+                    .Select(i => new RecipeIngredientViewModel
+                    {
+                        IngredientName = i.Ingredient.Name,
+                        Quantity = i.Quantity
+                    })
+                    .ToList()
+                })
+                .ToListAsync();
+
+            return recipeViewModels;
+        }
+
         public async Task<IEnumerable<RecipeViewModel>> GetNewAsync()
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.dbContext.Recipes
