@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Recipes.Data;
 using Recipes.Interfaces;
+using Recipes.Seeders;
 using Recipes.Services;
 
 
@@ -14,7 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ICategoriesService, CategoriesService>();
@@ -53,12 +55,14 @@ app.MapRazorPages();
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var context = services.GetRequiredService<ApplicationDbContext>();
-// var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 var logger = services.GetRequiredService<ILogger<Program>>();
 
 try
 {
     await context.Database.MigrateAsync();
+    await ApplicationDbContextSeed.SeedUsersAsync(userManager, roleManager);
 }
 catch (Exception ex)
 {

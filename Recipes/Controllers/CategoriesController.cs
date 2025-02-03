@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Recipes.InputModels.Categories;
 using Recipes.Interfaces;
 using Recipes.ViewModels.Categories;
 
 namespace Recipes.Controllers
 {
+    [Authorize(Roles = Constants.ADMINISTRATOR_ROLE)]
     public class CategoriesController : Controller
     {
         private readonly ICategoriesService categoriesService;

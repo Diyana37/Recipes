@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Recipes.InputModels.Ingredients;
 using Recipes.Interfaces;
 using Recipes.ViewModels.Ingredients;
 
 namespace Recipes.Controllers
 {
+    [Authorize(Roles = Constants.ADMINISTRATOR_ROLE)]
     public class IngredientsController : Controller
     {
         private readonly IIngredientsService ingredientsService;

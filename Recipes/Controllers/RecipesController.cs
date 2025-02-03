@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Recipes.InputModels.Ingredients;
 using Recipes.InputModels.Recipes;
 using Recipes.Interfaces;
@@ -23,6 +24,8 @@ namespace Recipes.Controllers
             this.recipeNationalitiesService = recipeNationalitiesService;
             this.categoriesService = categoriesService;
         }
+
+        [Authorize(Roles = Constants.ADMINISTRATOR_ROLE)]
         public async Task<IActionResult> List()
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.recipesService
@@ -31,6 +34,7 @@ namespace Recipes.Controllers
             return this.View(recipeViewModels);
         }
 
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             CreateRecipeInputModel createRecipeInputModel = new CreateRecipeInputModel
@@ -43,6 +47,7 @@ namespace Recipes.Controllers
             return this.View(createRecipeInputModel);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(CreateRecipeInputModel createRecipeInputModel)
         {
@@ -65,6 +70,7 @@ namespace Recipes.Controllers
             return this.RedirectToAction("List", "Recipes");
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             EditRecipeInputModel editRecipeInputModel = await this.recipesService
@@ -82,6 +88,7 @@ namespace Recipes.Controllers
             return this.View(editRecipeInputModel);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(int id, EditRecipeInputModel editRecipeInputModel)
         {
@@ -104,6 +111,7 @@ namespace Recipes.Controllers
             return this.RedirectToAction("List", "Recipes");
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             await this.recipesService.DeleteAsync(id);
