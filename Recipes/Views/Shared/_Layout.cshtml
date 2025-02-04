@@ -26,6 +26,13 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="New">Нови рецепти</a>
 						</li>
+
+						@if (this.User.Identity.IsAuthenticated)
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="CreatorList">Моите рецепти</a>
+							</li>
+						}
 					</ul>
 
 					<ul class="navbar-nav d-flex align-items-center gap-2">

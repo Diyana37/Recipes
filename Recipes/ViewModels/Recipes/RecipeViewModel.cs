@@ -1,4 +1,5 @@
-﻿using Recipes.ViewModels.RecipeIngredients;
+﻿using Recipes.Data.Entities.Identity;
+using Recipes.ViewModels.RecipeIngredients;
 using System.ComponentModel.DataAnnotations;
 
 namespace Recipes.ViewModels.Recipes
@@ -32,6 +33,10 @@ namespace Recipes.ViewModels.Recipes
         public int CategoryId { get; set; }
 
         public string CategoryName { get; set; }
+
+        public string CreatorId { get; set; }
+
+        public ApplicationUser Creator { get; set; }
 
         public IEnumerable<RecipeIngredientViewModel> Ingredients { get; set; }
     }

@@ -147,5 +147,17 @@ namespace Recipes.Controllers
 
             return this.View(recipeViewModels);
         }
+
+        [Authorize]
+        public async Task<IActionResult> CreatorList()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            string userId = user.Id;
+
+            IEnumerable<RecipeViewModel> recipeViewModels = await this.recipesService
+                .GetByCreatorIdAsync(userId);
+
+            return this.View(recipeViewModels);
+        }
     }
 }

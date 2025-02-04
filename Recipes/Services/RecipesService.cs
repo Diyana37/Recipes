@@ -152,55 +152,6 @@ namespace Recipes.Services
             return editRecipeInputModel;
         }
 
-        private async Task SplitIngredientsAsync(string ingredients, int recipeId)
-        {
-            string[] ingredientLines = ingredients.Split(Environment.NewLine);
-
-            if (ingredientLines.Length > 0)
-            {
-                foreach (var item in ingredientLines)
-                {
-                    string[] ingredientRow = item.Split('-');
-
-                    if (ingredientRow.Length > 1)
-                    {
-                        string ingredientName = ingredientRow[0].Trim();
-                        string quantity = ingredientRow[1].Trim();
-
-                        Ingredient ingredient = await this.dbContext.Ingredients
-                            .FirstOrDefaultAsync(i => i.Name.ToLower() == ingredientName.ToLower());
-
-                        if (ingredient != null)
-                        {
-                            RecipeIngredient recipeIngredient = new RecipeIngredient();
-                            recipeIngredient.IngredientId = ingredient.Id;
-                            recipeIngredient.RecipeId = recipeId;
-                            recipeIngredient.Quantity = quantity;
-
-                            await this.dbContext.RecipeIngredients.AddAsync(recipeIngredient);
-                            await this.dbContext.SaveChangesAsync();
-                        }
-                        else
-                        {
-                            Ingredient newIngredient = new Ingredient();
-                            newIngredient.Name = ingredientName;
-
-                            await this.dbContext.Ingredients.AddAsync(newIngredient);
-                            await this.dbContext.SaveChangesAsync();
-
-                            RecipeIngredient recipeIngredient = new RecipeIngredient();
-                            recipeIngredient.IngredientId = newIngredient.Id;
-                            recipeIngredient.RecipeId = recipeId;
-                            recipeIngredient.Quantity = quantity;
-
-                            await this.dbContext.RecipeIngredients.AddAsync(recipeIngredient);
-                            await this.dbContext.SaveChangesAsync();
-                        }
-                    }
-                }
-            }
-        }
-
         public async Task<IEnumerable<RecipeViewModel>> GetFilteredWithPaginationAsync()
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.dbContext.Recipes
@@ -314,6 +265,94 @@ namespace Recipes.Services
                 .ToListAsync();
 
             return recipeViewModels;
+        }
+
+        public async Task<IEnumerable<RecipeViewModel>> GetByCreatorIdAsync(string userId)
+        {
+            IEnumerable<RecipeViewModel> recipeViewModels = await this.dbContext.Recipes
+                .Include(r => r.RecipeType)
+                .Include(r => r.RecipeNationality)
+                .Include(r => r.Category)
+                .Include(r => r.Ingredients)
+                .ThenInclude(i => i.Ingredient)
+                .Where(i => i.CreatorId == userId)
+                .Select(r => new RecipeViewModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Description = r.Description,
+                    PreparationTime = r.PreparationTime,
+                    CookingTime = r.CookingTime,
+                    Portions = r.Portions,
+                    Difficulty = r.Difficulty,
+                    RecipeTypeId = r.RecipeTypeId,
+                    RecipeTypeName = r.RecipeType.Name,
+                    RecipeNationalityId = r.RecipeNationalityId,
+                    RecipeNationalityName = r.RecipeNationality.Name,
+                    CategoryId = r.CategoryId,
+                    CategoryName = r.Category.Name,
+                    Photo = r.Photo,
+                    CreatorId = userId,
+                    Ingredients = r.Ingredients
+                    .Select(i => new RecipeIngredientViewModel
+                    {
+                        IngredientName = i.Ingredient.Name,
+                        Quantity = i.Quantity
+                    })
+                    .ToList()
+                })
+                .ToListAsync();
+
+            return recipeViewModels;
+        }
+
+        private async Task SplitIngredientsAsync(string ingredients, int recipeId)
+        {
+            string[] ingredientLines = ingredients.Split(Environment.NewLine);
+
+            if (ingredientLines.Length > 0)
+            {
+                foreach (var item in ingredientLines)
+                {
+                    string[] ingredientRow = item.Split('-');
+
+                    if (ingredientRow.Length > 1)
+                    {
+                        string ingredientName = ingredientRow[0].Trim();
+                        string quantity = ingredientRow[1].Trim();
+
+                        Ingredient ingredient = await this.dbContext.Ingredients
+                            .FirstOrDefaultAsync(i => i.Name.ToLower() == ingredientName.ToLower());
+
+                        if (ingredient != null)
+                        {
+                            RecipeIngredient recipeIngredient = new RecipeIngredient();
+                            recipeIngredient.IngredientId = ingredient.Id;
+                            recipeIngredient.RecipeId = recipeId;
+                            recipeIngredient.Quantity = quantity;
+
+                            await this.dbContext.RecipeIngredients.AddAsync(recipeIngredient);
+                            await this.dbContext.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            Ingredient newIngredient = new Ingredient();
+                            newIngredient.Name = ingredientName;
+
+                            await this.dbContext.Ingredients.AddAsync(newIngredient);
+                            await this.dbContext.SaveChangesAsync();
+
+                            RecipeIngredient recipeIngredient = new RecipeIngredient();
+                            recipeIngredient.IngredientId = newIngredient.Id;
+                            recipeIngredient.RecipeId = recipeId;
+                            recipeIngredient.Quantity = quantity;
+
+                            await this.dbContext.RecipeIngredients.AddAsync(recipeIngredient);
+                            await this.dbContext.SaveChangesAsync();
+                        }
+                    }
+                }
+            }
         }
 
         private async Task<string> BuildIngredientsTextAreaAsync(int recipeId)
