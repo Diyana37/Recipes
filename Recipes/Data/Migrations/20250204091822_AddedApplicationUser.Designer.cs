@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Recipes.Data;
 
@@ -11,9 +12,11 @@ using Recipes.Data;
 namespace Recipes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250204091822_AddedApplicationUser")]
+    partial class AddedApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,6 +192,9 @@ namespace Recipes.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CustomTag")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -274,9 +280,6 @@ namespace Recipes.Data.Migrations
                     b.Property<int>("CookingTime")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreatorId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -308,8 +311,6 @@ namespace Recipes.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("CreatorId");
 
                     b.HasIndex("RecipeNationalityId");
 
@@ -441,10 +442,6 @@ namespace Recipes.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Recipes.Data.Entities.Identity.ApplicationUser", "Creator")
-                        .WithMany("Recipes")
-                        .HasForeignKey("CreatorId");
-
                     b.HasOne("Recipes.Data.Entities.RecipeNationality", "RecipeNationality")
                         .WithMany("Recipes")
                         .HasForeignKey("RecipeNationalityId")
@@ -458,8 +455,6 @@ namespace Recipes.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-
-                    b.Navigation("Creator");
 
                     b.Navigation("RecipeNationality");
 
@@ -486,11 +481,6 @@ namespace Recipes.Data.Migrations
                 });
 
             modelBuilder.Entity("Recipes.Data.Entities.Category", b =>
-                {
-                    b.Navigation("Recipes");
-                });
-
-            modelBuilder.Entity("Recipes.Data.Entities.Identity.ApplicationUser", b =>
                 {
                     b.Navigation("Recipes");
                 });

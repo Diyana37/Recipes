@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Recipes.Data;
 using Recipes.Data.Entities;
+using Recipes.Data.Entities.Identity;
 using Recipes.InputModels.Recipes;
 using Recipes.Interfaces;
 using Recipes.ViewModels.RecipeIngredients;
@@ -19,7 +20,7 @@ namespace Recipes.Services
             this.dbContext = dbContext;
             this.cloudinaryService = cloudinaryService;
         }
-        public async Task CreateAsync(CreateRecipeInputModel createRecipeInputModel)
+        public async Task CreateAsync(CreateRecipeInputModel createRecipeInputModel, string userId)
         {
             Recipe recipe = new Recipe
             {
@@ -31,7 +32,8 @@ namespace Recipes.Services
                 Difficulty = createRecipeInputModel.Difficulty,
                 RecipeTypeId = createRecipeInputModel.RecipeTypeId,
                 RecipeNationalityId = createRecipeInputModel.RecipeNationalityId,
-                CategoryId = createRecipeInputModel.CategoryId
+                CategoryId = createRecipeInputModel.CategoryId,
+                CreatorId = userId
             };
 
             if (createRecipeInputModel.FormFile != null && createRecipeInputModel.FormFile.Length > 0)

@@ -5,7 +5,7 @@ namespace Recipes.Interfaces
 {
     public interface IRecipesService
     {
-        Task CreateAsync(CreateRecipeInputModel createRecipeInputModel);
+        Task CreateAsync(CreateRecipeInputModel createRecipeInputModel, string userId);
 
         Task<IEnumerable<RecipeViewModel>> GetAllAsync();
 

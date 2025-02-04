@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Recipes.Data;
+using Recipes.Data.Entities.Identity;
 using Recipes.Interfaces;
 using Recipes.Seeders;
 using Recipes.Services;
@@ -14,7 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
@@ -55,7 +56,7 @@ app.MapRazorPages();
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var context = services.GetRequiredService<ApplicationDbContext>();
-var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 var logger = services.GetRequiredService<ILogger<Program>>();
 

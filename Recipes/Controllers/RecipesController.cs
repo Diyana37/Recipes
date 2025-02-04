@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Recipes.Data.Entities.Identity;
 using Recipes.InputModels.Ingredients;
 using Recipes.InputModels.Recipes;
 using Recipes.Interfaces;
@@ -13,16 +15,19 @@ namespace Recipes.Controllers
         private readonly IRecipeTypesService recipeTypesService;
         private readonly IRecipeNationalitiesService recipeNationalitiesService;
         private readonly ICategoriesService categoriesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public RecipesController(IRecipesService recipesService,
             IRecipeTypesService recipeTypesService,
             IRecipeNationalitiesService recipeNationalitiesService,
-            ICategoriesService categoriesService)
+            ICategoriesService categoriesService,
+            UserManager<ApplicationUser> userManager)
         {
             this.recipesService = recipesService;
             this.recipeTypesService = recipeTypesService;
             this.recipeNationalitiesService = recipeNationalitiesService;
             this.categoriesService = categoriesService;
+            this.userManager = userManager;
         }
 
         [Authorize(Roles = Constants.ADMINISTRATOR_ROLE)]
@@ -65,7 +70,8 @@ namespace Recipes.Controllers
                 return this.View(createRecipeInputModel);
             }
 
-            await this.recipesService.CreateAsync(createRecipeInputModel);
+            var user = await this.userManager.GetUserAsync(this.User);
+            await this.recipesService.CreateAsync(createRecipeInputModel, user.Id);
 
             return this.RedirectToAction("List", "Recipes");
         }

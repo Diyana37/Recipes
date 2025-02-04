@@ -1,4 +1,5 @@
 ﻿using Humanizer.Localisation;
+using Recipes.Data.Entities.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace Recipes.Data.Entities
@@ -54,6 +55,10 @@ namespace Recipes.Data.Entities
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
+
+        public string CreatorId { get; set; }
+
+        public ApplicationUser Creator { get; set; }
 
         public ICollection<RecipeIngredient> Ingredients { get; set; }
     }
