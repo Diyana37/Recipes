@@ -5,6 +5,7 @@ using Recipes.Data.Entities.Identity;
 using Recipes.InputModels.Ingredients;
 using Recipes.InputModels.Recipes;
 using Recipes.Interfaces;
+using Recipes.ViewModels.Categories;
 using Recipes.ViewModels.Recipes;
 
 namespace Recipes.Controllers
@@ -140,12 +141,18 @@ namespace Recipes.Controllers
             return this.View(recipeViewModels);
         }
 
-        public async Task<IActionResult> FilteredWithPagination()
+        public async Task<IActionResult> FilteredWithPagination(FilterRecipeInputModel filterRecipeInputModel)
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.recipesService
-                .GetFilteredWithPaginationAsync();
+                .GetFilteredWithPaginationAsync(filterRecipeInputModel);
 
-            return this.View(recipeViewModels);
+            IEnumerable<CategoryViewModel> categoryViewModels = await this.categoriesService
+                .GetAllAsync();
+
+            filterRecipeInputModel.Recipes = recipeViewModels;
+            filterRecipeInputModel.Categories = categoryViewModels;
+
+            return this.View(filterRecipeInputModel);
         }
 
         [Authorize]

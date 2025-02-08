@@ -152,14 +152,30 @@ namespace Recipes.Services
             return editRecipeInputModel;
         }
 
-        public async Task<IEnumerable<RecipeViewModel>> GetFilteredWithPaginationAsync()
+        public async Task<IEnumerable<RecipeViewModel>> GetFilteredWithPaginationAsync(FilterRecipeInputModel filterRecipeInputModel)
         {
-            IEnumerable<RecipeViewModel> recipeViewModels = await this.dbContext.Recipes
+            IQueryable<Recipe> recipes = this.dbContext.Recipes
                 .Include(r => r.RecipeType)
                 .Include(r => r.RecipeNationality)
                 .Include(r => r.Category)
                 .Include(r => r.Ingredients)
                 .ThenInclude(i => i.Ingredient)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterRecipeInputModel.SearchText))
+            {
+                recipes = recipes
+                    .Where(r => r.Name.ToLower().Contains(filterRecipeInputModel.SearchText.ToLower())
+                    || r.Ingredients.Any(i => i.Ingredient.Name.ToLower().Contains(filterRecipeInputModel.SearchText.ToLower())));
+            }
+
+            if (filterRecipeInputModel.CategoryIds.Count() > 0)
+            {
+                recipes = recipes
+                    .Where(r => filterRecipeInputModel.CategoryIds.Any(c => c == r.CategoryId));
+            }
+
+            IEnumerable<RecipeViewModel> recipeViewModels = await recipes
                 .Select(r => new RecipeViewModel
                 {
                     Id = r.Id,
