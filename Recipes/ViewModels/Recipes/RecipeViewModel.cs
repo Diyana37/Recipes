@@ -36,8 +36,8 @@ namespace Recipes.ViewModels.Recipes
 
         public string CreatorId { get; set; }
 
-        public ApplicationUser Creator { get; set; }
+        public string CreatorUserName { get; set; }
 
-        public IEnumerable<RecipeIngredientViewModel> Ingredients { get; set; }
+        public IEnumerable<RecipeIngredientViewModel> Ingredients { get; set; } = new List<RecipeIngredientViewModel>();
     }
 }

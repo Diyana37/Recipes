@@ -19,7 +19,6 @@ namespace Recipes.Data.Entities
 
         [Required]
         [MinLength(3)]
-        [MaxLength(1000)]
         public string Description { get; set; }
         
         [Required]

@@ -175,6 +175,30 @@ namespace Recipes.Services
                     .Where(r => filterRecipeInputModel.CategoryIds.Any(c => c == r.CategoryId));
             }
 
+            if (filterRecipeInputModel.RecipeNationalityIds.Count() > 0)
+            {
+                recipes = recipes
+                    .Where(r => filterRecipeInputModel.RecipeNationalityIds.Any(n => n == r.RecipeNationalityId));
+            }
+
+            if (filterRecipeInputModel.RecipeTypeIds.Count() > 0)
+            {
+                recipes = recipes
+                    .Where(r => filterRecipeInputModel.RecipeTypeIds.Any(t => t == r.RecipeTypeId));
+            }
+
+            if (filterRecipeInputModel.IngredientIds.Count() > 0)
+            {
+                recipes = recipes
+                    .Where(r => filterRecipeInputModel.IngredientIds.Any(id => r.Ingredients.Any(i => id == i.Ingredient.Id)));
+            }
+
+            if (filterRecipeInputModel.Portions.Count() > 0)
+            {
+                recipes = recipes
+                    .Where(r => filterRecipeInputModel.Portions.Any(p => p == r.Portions));
+            }
+
             IEnumerable<RecipeViewModel> recipeViewModels = await recipes
                 .Select(r => new RecipeViewModel
                 {
@@ -209,7 +233,7 @@ namespace Recipes.Services
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.dbContext.Recipes
                 .OrderByDescending(r => r.Id)
-                .Take(3)
+                .Take(10)
                 .Include(r => r.RecipeType)
                 .Include(r => r.RecipeNationality)
                 .Include(r => r.Category)
@@ -248,7 +272,7 @@ namespace Recipes.Services
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.dbContext.Recipes
                 .OrderByDescending(r => Guid.NewGuid())
-                .Take(3)
+                .Take(10)
                 .Include(r => r.RecipeType)
                 .Include(r => r.RecipeNationality)
                 .Include(r => r.Category)
@@ -320,6 +344,39 @@ namespace Recipes.Services
                 .ToListAsync();
 
             return recipeViewModels;
+        }
+
+        public async Task<RecipeDetailsViewModel> GetDetailsAsync(int id)
+        {
+            RecipeDetailsViewModel detailsViewModel = await this.dbContext.Recipes
+                .Include(r => r.Creator)
+                .Where(r => r.Id == id)
+                .Select(r => new RecipeDetailsViewModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Description = r.Description,
+                    PreparationTime = r.PreparationTime,
+                    CookingTime = r.CookingTime,
+                    Portions = r.Portions,
+                    Difficulty = r.Difficulty,
+                    RecipeTypeId = r.RecipeTypeId,
+                    RecipeNationalityId = r.RecipeNationalityId,
+                    CategoryId = r.CategoryId,
+                    Photo = r.Photo,
+                    CreatorId = r.CreatorId,
+                    CreatorUserName = r.Creator != null ? r.Creator.UserName : string.Empty,
+                    Ingredients = r.Ingredients
+                    .Select(i => new RecipeIngredientViewModel
+                    {
+                        IngredientName = i.Ingredient.Name,
+                        Quantity = i.Quantity
+                    }).ToList()
+                })
+                .FirstOrDefaultAsync();
+
+
+            return detailsViewModel;
         }
 
         private async Task SplitIngredientsAsync(string ingredients, int recipeId)

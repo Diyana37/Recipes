@@ -22,5 +22,7 @@ namespace Recipes.Interfaces
         Task<IEnumerable<RecipeViewModel>> GetFilteredWithPaginationAsync(FilterRecipeInputModel filterRecipeInputModel);
 
         Task<IEnumerable<RecipeViewModel>> GetByCreatorIdAsync(string userId);
+
+        Task<RecipeDetailsViewModel> GetDetailsAsync(int id);
     }
 }

@@ -12,7 +12,6 @@ namespace Recipes.InputModels.Recipes
 
         [Required(ErrorMessage = "Описанието е задължително!")]
         [MinLength(3, ErrorMessage = "Описанието трябва да е минимум 3 символа!")]
-        [MaxLength(1000, ErrorMessage = "Описанието трябва да е максимум 1000 символа!")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Продуктите са задължителни!")]

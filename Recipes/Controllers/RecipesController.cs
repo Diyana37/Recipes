@@ -6,7 +6,11 @@ using Recipes.InputModels.Ingredients;
 using Recipes.InputModels.Recipes;
 using Recipes.Interfaces;
 using Recipes.ViewModels.Categories;
+using Recipes.ViewModels.Ingredients;
+using Recipes.ViewModels.RecipeIngredients;
+using Recipes.ViewModels.RecipeNationalities;
 using Recipes.ViewModels.Recipes;
+using Recipes.ViewModels.RecipeTypes;
 
 namespace Recipes.Controllers
 {
@@ -16,18 +20,21 @@ namespace Recipes.Controllers
         private readonly IRecipeTypesService recipeTypesService;
         private readonly IRecipeNationalitiesService recipeNationalitiesService;
         private readonly ICategoriesService categoriesService;
+        private readonly IIngredientsService ingredientsService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public RecipesController(IRecipesService recipesService,
             IRecipeTypesService recipeTypesService,
             IRecipeNationalitiesService recipeNationalitiesService,
-            ICategoriesService categoriesService,
+            ICategoriesService categoriesService, 
+            IIngredientsService ingredientsService,
             UserManager<ApplicationUser> userManager)
         {
             this.recipesService = recipesService;
             this.recipeTypesService = recipeTypesService;
             this.recipeNationalitiesService = recipeNationalitiesService;
             this.categoriesService = categoriesService;
+            this.ingredientsService = ingredientsService;
             this.userManager = userManager;
         }
 
@@ -74,7 +81,9 @@ namespace Recipes.Controllers
             var user = await this.userManager.GetUserAsync(this.User);
             await this.recipesService.CreateAsync(createRecipeInputModel, user.Id);
 
-            return this.RedirectToAction("List", "Recipes");
+            string actionName = this.User.IsInRole(Constants.ADMINISTRATOR_ROLE) ? "List" : "CreatorList";
+
+            return this.RedirectToAction(actionName, "Recipes");
         }
 
         [Authorize]
@@ -115,7 +124,9 @@ namespace Recipes.Controllers
 
             await this.recipesService.EditAsync(editRecipeInputModel);
 
-            return this.RedirectToAction("List", "Recipes");
+            string actionName = this.User.IsInRole(Constants.ADMINISTRATOR_ROLE) ? "List" : "CreatorList";
+
+            return this.RedirectToAction(actionName, "Recipes");
         }
 
         [Authorize]
@@ -123,7 +134,9 @@ namespace Recipes.Controllers
         {
             await this.recipesService.DeleteAsync(id);
 
-            return this.RedirectToAction("List", "Recipes");
+            string actionName = this.User.IsInRole(Constants.ADMINISTRATOR_ROLE) ? "List" : "CreatorList";
+
+            return this.RedirectToAction(actionName, "Recipes");
         }
         public async Task<IActionResult> New()
         {
@@ -149,8 +162,20 @@ namespace Recipes.Controllers
             IEnumerable<CategoryViewModel> categoryViewModels = await this.categoriesService
                 .GetAllAsync();
 
+            IEnumerable<RecipeNationalityViewModel> recipeNationalityViewModels = await this.recipeNationalitiesService
+                .GetAllAsync();
+
+            IEnumerable<RecipeTypeViewModel> recipeTypeViewModels = await this.recipeTypesService
+                .GetAllAsync();
+
+            IEnumerable<IngredientViewModel> ingredientViewModels = await this.ingredientsService
+                .GetAllAsync();
+
             filterRecipeInputModel.Recipes = recipeViewModels;
             filterRecipeInputModel.Categories = categoryViewModels;
+            filterRecipeInputModel.RecipeNationalities = recipeNationalityViewModels;
+            filterRecipeInputModel.RecipeTypes = recipeTypeViewModels;
+            filterRecipeInputModel.Ingredients = ingredientViewModels;
 
             return this.View(filterRecipeInputModel);
         }
@@ -165,6 +190,14 @@ namespace Recipes.Controllers
                 .GetByCreatorIdAsync(userId);
 
             return this.View(recipeViewModels);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            RecipeDetailsViewModel detailsViewModel = await this.recipesService
+                .GetDetailsAsync(id);
+
+            return this.View(detailsViewModel);
         }
     }
 }
