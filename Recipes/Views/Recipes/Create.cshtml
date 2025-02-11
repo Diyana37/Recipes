@@ -9,72 +9,80 @@
 <form method="post" asp-controller="Recipes" asp-action="Create" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="alert-danger"></div>
 
-    <div class="form-group">
-        <label asp-for="Name">Име</label>
-        <input class="form-control" asp-for="Name" />
-        <span asp-validation-for="Name" class="alert-danger"></span>
+    <div class="row mt-3">
+        <div class="form-group col-4">
+            <label asp-for="Name">Име</label>
+            <input class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name" class="alert-danger"></span>
+        </div>
+
+        <div class="form-group col-4">
+            <label asp-for="Portions">Брой порции</label>
+            <input class="form-control" asp-for="Portions" />
+            <span asp-validation-for="Portions" class="alert-danger"></span>
+        </div>
+        
+        <div class="form-group col-4">
+            <label asp-for="FormFile">Снимка</label>
+            <input class="form-control" asp-for="FormFile" />
+            <span asp-validation-for="FormFile" class="alert-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Description">Описание - Начин на приготвяне</label>
-        <input class="form-control" asp-for="Description" />
-        <span asp-validation-for="Description" class="alert-danger"></span>
+    <div class="row mt-3">
+        <div class="form-group col-4">
+            <label asp-for="PreparationTime">Време за приготвяне/минути/</label>
+            <input class="form-control" asp-for="PreparationTime" />
+            <span asp-validation-for="PreparationTime" class="alert-danger"></span>
+        </div>
+
+        <div class="form-group col-4">
+            <label asp-for="CookingTime">Време за готвене/минути/</label>
+            <input class="form-control" asp-for="CookingTime" />
+            <span asp-validation-for="CookingTime" class="alert-danger"></span>
+        </div>
+
+        <div class="form-group col-4">
+            <label asp-for="Difficulty">Трудност</label>
+            <input class="form-control" asp-for="Difficulty" />
+            <span asp-validation-for="Difficulty" class="alert-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="PreparationTime">Време за приготвяне/минути/</label>
-        <input class="form-control" asp-for="PreparationTime" />
-        <span asp-validation-for="PreparationTime" class="alert-danger"></span>
+    <div class="row mt-3">
+        <div class="form-group col-4">
+            <label asp-for="CategoryId">Категория</label>
+            <select class="form-select" asp-for="CategoryId" asp-items="this.Model.CategoryItems"></select>
+            <span asp-validation-for="CategoryId" class="alert-danger"></span>
+        </div>
+
+        <div class="form-group col-4">
+            <label asp-for="RecipeTypeId">Тип</label>
+            <select class="form-select" asp-for="RecipeTypeId" asp-items="this.Model.RecipeTypeItems"></select>
+            <span asp-validation-for="RecipeTypeId" class="alert-danger"></span>
+        </div>
+
+        <div class="form-group col-4">
+            <label asp-for="RecipeNationalityId">Националност</label>
+            <select class="form-select" asp-for="RecipeNationalityId" asp-items="this.Model.RecipeNationalityItems"></select>
+            <span asp-validation-for="RecipeNationalityId" class="alert-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="CookingTime">Време за готвене/минути/</label>
-        <input class="form-control" asp-for="CookingTime" />
-        <span asp-validation-for="CookingTime" class="alert-danger"></span>
-    </div>
+    <div class="row mt-3">
+        <div class="form-group col-6">
+            <label asp-for="Description">Описание - Начин на приготвяне</label>
+            <textarea class="form-control" asp-for="Description" style="height: 200px"></textarea>
+            <span asp-validation-for="Description" class="alert-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Portions">Брой порции</label>
-        <input class="form-control" asp-for="Portions" />
-        <span asp-validation-for="Portions" class="alert-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Difficulty">Трудност</label>
-        <input class="form-control" asp-for="Difficulty" />
-        <span asp-validation-for="Difficulty" class="alert-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="FormFile">Снимка</label>
-        <input class="form-control" asp-for="FormFile" />
-        <span asp-validation-for="FormFile" class="alert-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="RecipeTypeId">Тип</label>
-        <select class="form-select" asp-for="RecipeTypeId" asp-items="this.Model.RecipeTypeItems"></select>
-        <span asp-validation-for="RecipeTypeId" class="alert-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="RecipeNationalityId">Националност</label>
-        <select class="form-select" asp-for="RecipeNationalityId" asp-items="this.Model.RecipeNationalityItems"></select>
-        <span asp-validation-for="RecipeNationalityId" class="alert-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="CategoryId">Категория</label>
-        <select class="form-select" asp-for="CategoryId" asp-items="this.Model.CategoryItems"></select>
-        <span asp-validation-for="CategoryId" class="alert-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Ingredients">
-            Продукти (по един на ред) / Пример: картофи - 1 кг
-        </label>
-        <textarea class="form-control" asp-for="Ingredients" style="height: 200px"></textarea>
-        <span asp-validation-for="Ingredients" class="alert-danger"></span>
+        <div class="form-group col-6">
+            <label asp-for="Ingredients">
+                Продукти (по един на ред) / Пример: картофи - 1 кг
+            </label>
+            <textarea class="form-control" asp-for="Ingredients" style="height: 200px"></textarea>
+            <span asp-validation-for="Ingredients" class="alert-danger"></span>
+        </div>
     </div>
 
     <input type="submit" value="Добави" class="btn btn-primary mt-3" />

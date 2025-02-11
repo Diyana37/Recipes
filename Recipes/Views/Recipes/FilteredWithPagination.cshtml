@@ -9,7 +9,8 @@
 <form method="get" asp-controller="Recipes" asp-action="FilteredWithPagination">
 	<div class="row">
 		<div class="col-3">
-			<input type="submit" class="btn btn-primary mb-3" value="Search" />
+			<input type="submit" class="btn btn-primary mb-3" value="Търси" />
+			<a class="btn btn-danger mb-3 ms-1" asp-controller="Recipes" asp-action="FilteredWithPagination" asp-route-mode="reset">Изчисти</a>
 
 			<h3>Категории</h3>
 			<hr />

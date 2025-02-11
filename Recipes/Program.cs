@@ -55,15 +55,15 @@ app.MapRazorPages();
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
-var context = services.GetRequiredService<ApplicationDbContext>();
+var dbContext = services.GetRequiredService<ApplicationDbContext>();
 var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 var logger = services.GetRequiredService<ILogger<Program>>();
 
 try
 {
-    await context.Database.MigrateAsync();
-    await ApplicationDbContextSeed.SeedUsersAsync(userManager, roleManager);
+    await dbContext.Database.MigrateAsync();
+    await ApplicationDbContextSeed.SeedAsync(dbContext, userManager, roleManager);
 }
 catch (Exception ex)
 {

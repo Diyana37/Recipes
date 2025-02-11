@@ -154,8 +154,15 @@ namespace Recipes.Controllers
             return this.View(recipeViewModels);
         }
 
-        public async Task<IActionResult> FilteredWithPagination(FilterRecipeInputModel filterRecipeInputModel)
+        public async Task<IActionResult> FilteredWithPagination(
+            FilterRecipeInputModel filterRecipeInputModel,
+            string mode)
         {
+            if (mode == "reset")
+            {
+                filterRecipeInputModel = new FilterRecipeInputModel();
+            }
+
             IEnumerable<RecipeViewModel> recipeViewModels = await this.recipesService
                 .GetFilteredWithPaginationAsync(filterRecipeInputModel);
 
