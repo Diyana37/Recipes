@@ -4,16 +4,6 @@
 	this.ViewData["Title"] = "Всички Рецепти";
 }
 
-<style>
-	.visible {
-		display: block;
-	}
-
-	.hidden {
-		display: none;
-	}
-</style>
-
 <h1 class="text-center mb-3">Рецепти</h1>
 
 <form method="get" asp-controller="Recipes" asp-action="FilteredWithPagination">
@@ -25,175 +15,136 @@
 			<h3>Категории</h3>
 			<hr />
 
-			<div id="top-5-categories" class="visible">
-				@foreach (var category in this.Model.Categories.Take(5))
-				{
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="CategoryIds" value="@category.Id" id="category_@category.Id" @(this.Model.CategoryIds.Any(c => c == category.Id) ? "checked" : "")>
-						<label class="form-check-label d-block text-truncate" for="category_@category.Id">
-							@category.Name
-						</label>
-					</div>
-				}
+			@foreach (var category in this.Model.Categories.Take(5))
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="CategoryIds" value="@category.Id" id="category_@category.Id" @(this.Model.CategoryIds.Any(c => c == category.Id) ? "checked" : "")>
+					<label class="form-check-label d-block text-truncate" for="category_@category.Id">
+						@category.Name
+					</label>
+				</div>
+			}
 
-				@if (this.Model.Categories.Count() > 5)
-				{
-					<a id="show-more-categories" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
-						Покажи повече
-					</a>
-				}
-			</div>
+			@if (this.Model.Categories.Count() > 5)
+			{
+				<div id="collapseCategories" class="collapse">
+					@foreach (var category in this.Model.Categories.Skip(5))
+					{
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="CategoryIds" value="@category.Id" id="category_@category.Id" @(this.Model.CategoryIds.Any(c => c == category.Id) ? "checked" : "")>
+							<label class="form-check-label d-block text-truncate" for="category_@category.Id">
+								@category.Name
+							</label>
+						</div>
+					}
+				</div>
 
-			<div id="all-categories" class="hidden">
-				@foreach (var category in this.Model.Categories)
-				{
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="CategoryIds" value="@category.Id" id="category_@category.Id" @(this.Model.CategoryIds.Any(c => c == category.Id) ? "checked" : "")>
-						<label class="form-check-label d-block text-truncate" for="category_@category.Id">
-							@category.Name
-						</label>
-					</div>
-				}
-
-				<a id="show-less-categories" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
-					Покажи по-малко
+				<a onclick="toggleText(this)" data-bs-toggle="collapse" href="#collapseCategories" role="button" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
+					Покажи повече
 				</a>
-			</div>
+			}
 
 			<div class="mt-3"></div>
 
 			<h3>Националности</h3>
 			<hr />
 
-			<div id="top-5-nationalities" class="visible">
-				@foreach (var recipeNationality in this.Model.RecipeNationalities.Take(5))
-				{
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="RecipeNationalityIds" value="@recipeNationality.Id" id="recipeNationality_@recipeNationality.Id" @(this.Model.RecipeNationalityIds.Any(r => r == recipeNationality.Id) ? "checked" : "")>
-						<label class="form-check-label d-block text-truncate" for="recipeNationality_@recipeNationality.Id">
-							@recipeNationality.Name
-						</label>
-					</div>
-				}
+			@foreach (var recipeNationality in this.Model.RecipeNationalities.Take(5))
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="RecipeNationalityIds" value="@recipeNationality.Id" id="recipeNationality_@recipeNationality.Id" @(this.Model.RecipeNationalityIds.Any(r => r == recipeNationality.Id) ? "checked" : "")>
+					<label class="form-check-label d-block text-truncate" for="recipeNationality_@recipeNationality.Id">
+						@recipeNationality.Name
+					</label>
+				</div>
+			}
 
-				@if (this.Model.RecipeNationalities.Count() > 5)
-				{
-					<a id="show-more-nationalities" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
-						Покажи повече
-					</a>
-				}
-			</div>
+			@if (this.Model.RecipeNationalities.Count() > 5)
+			{
+				<div id="collapseNationalities" class="collapse">
+					@foreach (var recipeNationality in this.Model.RecipeNationalities.Skip(5))
+					{
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="RecipeNationalityIds" value="@recipeNationality.Id" id="recipeNationality_@recipeNationality.Id" @(this.Model.RecipeNationalityIds.Any(r => r == recipeNationality.Id) ? "checked" : "")>
+							<label class="form-check-label d-block text-truncate" for="recipeNationality_@recipeNationality.Id">
+								@recipeNationality.Name
+							</label>
+						</div>
+					}
+				</div>
 
-			<div id="all-nationalities" class="hidden">
-				@foreach (var recipeNationality in this.Model.RecipeNationalities)
-				{
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="RecipeNationalityIds" value="@recipeNationality.Id" id="recipeNationality_@recipeNationality.Id" @(this.Model.RecipeNationalityIds.Any(r => r == recipeNationality.Id) ? "checked" : "")>
-						<label class="form-check-label d-block text-truncate" for="recipeNationality_@recipeNationality.Id">
-							@recipeNationality.Name
-						</label>
-					</div>
-				}
-
-				<a id="show-less-nationalities" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
-					Покажи по-малко
+				<a onclick="toggleText(this)" data-bs-toggle="collapse" href="#collapseNationalities" role="button" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
+					Покажи повече
 				</a>
-			</div>
+			}
 
 			<div class="mt-3"></div>
 
 			<h3>Типове</h3>
 			<hr />
 
-			<div id="top-5-types" class="visible">
-				@foreach (var recipeType in this.Model.RecipeTypes.Take(5))
-				{
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="RecipeTypeIds" value="@recipeType.Id" id="recipeType_@recipeType.Id" @(this.Model.RecipeTypeIds.Any(r => r == recipeType.Id) ? "checked" : "")>
-						<label class="form-check-label d-block text-truncate" for="recipeType_@recipeType.Id">
-							@recipeType.Name
-						</label>
-					</div>
-				}
+			@foreach (var recipeType in this.Model.RecipeTypes.Take(5))
+			{
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="RecipeTypeIds" value="@recipeType.Id" id="recipeType_@recipeType.Id" @(this.Model.RecipeTypeIds.Any(r => r == recipeType.Id) ? "checked" : "")>
+					<label class="form-check-label d-block text-truncate" for="recipeType_@recipeType.Id">
+						@recipeType.Name
+					</label>
+				</div>
+			}
 
-				@if (this.Model.RecipeTypes.Count() > 5)
-				{
-					<a id="show-more-types" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
-						Покажи повече
-					</a>
-				}
-			</div>
+			@if (this.Model.RecipeTypes.Count() > 5)
+			{
+				<div id="collapseTypes" class="collapse">
+					@foreach (var recipeType in this.Model.RecipeTypes.Skip(5))
+					{
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="RecipeTypeIds" value="@recipeType.Id" id="recipeType_@recipeType.Id" @(this.Model.RecipeTypeIds.Any(r => r == recipeType.Id) ? "checked" : "")>
+							<label class="form-check-label d-block text-truncate" for="recipeType_@recipeType.Id">
+								@recipeType.Name
+							</label>
+						</div>
+					}
+				</div>
 
-			<div id="all-types" class="hidden">
-				@foreach (var recipeType in this.Model.RecipeTypes)
-				{
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="RecipeTypeIds" value="@recipeType.Id" id="recipeType_@recipeType.Id" @(this.Model.RecipeTypeIds.Any(r => r == recipeType.Id) ? "checked" : "")>
-						<label class="form-check-label d-block text-truncate" for="recipeType_@recipeType.Id">
-							@recipeType.Name
-						</label>
-					</div>
-				}
-
-				<a id="show-less-types" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
-					Покажи по-малко
+				<a onclick="toggleText(this)" data-bs-toggle="collapse" href="#collapseTypes" role="button" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
+					Покажи повече
 				</a>
-			</div>
+			}
 
 			<div class="mt-3"></div>
 
 			<h3>Продукти</h3>
 			<hr />
 
-			<div id="top-5-ingredients" class="visible">
-				@foreach (var ingredient in this.Model.Ingredients.Take(5))
-				{
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="IngredientIds" value="@ingredient.Id" id="ingredient_@ingredient.Id" @(this.Model.IngredientIds.Any(i => i == ingredient.Id) ? "checked" : "")>
-						<label class="form-check-label d-block text-truncate" for="ingredient_@ingredient.Id">
-							@ingredient.Name
-						</label>
-					</div>
-				}
-
-				@if (this.Model.Ingredients.Count() > 5)
-				{
-					<a id="show-more-ingredients" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
-						Покажи повече
-					</a>
-				}
-			</div>
-
-			<div id="all-ingredients" class="hidden">
-				@foreach (var ingredient in this.Model.Ingredients)
-				{
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="IngredientIds" value="@ingredient.Id" id="ingredient_@ingredient.Id" @(this.Model.IngredientIds.Any(i => i == ingredient.Id) ? "checked" : "")>
-						<label class="form-check-label d-block text-truncate" for="ingredient_@ingredient.Id">
-							@ingredient.Name
-						</label>
-					</div>
-				}
-
-				<a id="show-less-ingredients" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
-					Покажи по-малко
-				</a>
-			</div>
-
-			<div class="mt-3"></div>
-
-			@* <h3>Порции</h3>
-			<hr />
-
-			@foreach (var recipe in this.Model.Recipes)
+			@foreach (var ingredient in this.Model.Ingredients.Take(5))
 			{
 				<div class="form-check">
-					<input class="form-check-input" type="checkbox" name="Portions" value="@recipe.Portions" id="portion_@recipe.Id" @(this.Model.Portions.Any(p => p == recipe.Portions) ? "checked" : "")>
-					<label class="form-check-label d-block text-truncate" for="portion_@recipe.Id">
-						@recipe.Portions
+					<input class="form-check-input" type="checkbox" name="IngredientIds" value="@ingredient.Id" id="ingredient_@ingredient.Id" @(this.Model.IngredientIds.Any(i => i == ingredient.Id) ? "checked" : "")>
+					<label class="form-check-label d-block text-truncate" for="ingredient_@ingredient.Id">
+						@ingredient.Name
 					</label>
 				</div>
-			} *@
+			}
+
+			@if (this.Model.Ingredients.Count() > 5)
+			{
+				<div id="collapseIngredients" class="collapse">
+					@foreach (var ingredient in this.Model.Ingredients.Skip(5))
+					{
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="IngredientIds" value="@ingredient.Id" id="ingredient_@ingredient.Id" @(this.Model.IngredientIds.Any(i => i == ingredient.Id) ? "checked" : "")>
+							<label class="form-check-label d-block text-truncate" for="ingredient_@ingredient.Id">
+								@ingredient.Name
+							</label>
+						</div>
+					}
+				</div>
+
+				<a onclick="toggleText(this)" data-bs-toggle="collapse" href="#collapseIngredients" role="button" style="text-decoration: none; cursor: pointer;" class="text-primary mt-1">
+					Покажи повече
+				</a>
+			}
 		</div>
 
 		<div class="col-9">
@@ -265,154 +216,8 @@
 
 @section Scripts {
 	<script type="text/javascript">
-		const showMoreCategories = document.querySelector("#show-more-categories");
-
-		if (showMoreCategories) {
-			showMoreCategories.addEventListener("click", function (e) {
-				// Copy checked state from #top-5-categories to #all-categories
-				document.querySelectorAll("#top-5-categories input[type='checkbox']").forEach((checkbox, index) => {
-					const allCheckboxes = document.querySelectorAll("#all-categories input[type='checkbox']");
-					if (allCheckboxes[index]) {
-						allCheckboxes[index].checked = checkbox.checked;
-					}
-				});
-
-				// Show all and hide top-5-categories
-				document.querySelector("#top-5-categories").classList.add("hidden");
-				document.querySelector("#all-categories").classList.remove("hidden");
-			});
-		}
-
-		const showLess = document.querySelector("#show-less-categories");
-
-		if (showLess) {
-			showLess.addEventListener("click", function (e) {
-				// Copy checked state from #all-categories to #top-5-categories
-				document.querySelectorAll("#all-categories input[type='checkbox']").forEach((checkbox, index) => {
-					const topCheckboxes = document.querySelectorAll("#top-5-categories input[type='checkbox']");
-					if (topCheckboxes[index]) {
-						topCheckboxes[index].checked = checkbox.checked;
-					}
-				});
-
-				// Show top-5 and hide all
-				document.querySelector("#top-5-categories").classList.remove("hidden");
-				document.querySelector("#all-categories").classList.add("hidden");
-			});
-		}
-	</script>
-
-	<script type="text/javascript">
-		const showMoreNationalities = document.querySelector("#show-more-nationalities");
-
-		if (showMoreNationalities) {
-			showMoreNationalities.addEventListener("click", function (e) {
-				// Copy checked state from #top-5-nationalities to #all-nationalities
-				document.querySelectorAll("#top-5-nationalities input[type='checkbox']").forEach((checkbox, index) => {
-					const allCheckboxes = document.querySelectorAll("#all-nationalities input[type='checkbox']");
-					if (allCheckboxes[index]) {
-						allCheckboxes[index].checked = checkbox.checked;
-					}
-				});
-
-				// Show all and hide top-5-nationalities
-				document.querySelector("#top-5-nationalities").classList.add("hidden");
-				document.querySelector("#all-nationalities").classList.remove("hidden");
-			});
-		}
-
-		const showLessNationalities = document.querySelector("#show-less-nationalities");
-
-		if (showLessNationalities) {
-			showLessNationalities.addEventListener("click", function (e) {
-				// Copy checked state from #all-nationalities to #top-5-nationalities
-				document.querySelectorAll("#all-nationalities input[type='checkbox']").forEach((checkbox, index) => {
-					const topCheckboxes = document.querySelectorAll("#top-5-nationalities input[type='checkbox']");
-					if (topCheckboxes[index]) {
-						topCheckboxes[index].checked = checkbox.checked;
-					}
-				});
-
-				// Show top-5 and hide all
-				document.querySelector("#top-5-nationalities").classList.remove("hidden");
-				document.querySelector("#all-nationalities").classList.add("hidden");
-			});
-		}
-	</script>
-
-	<script type="text/javascript">
-		const showMoreTypes = document.querySelector("#show-more-types");
-
-		if (showMoreTypes) {
-			showMoreTypes.addEventListener("click", function (e) {
-				// Copy checked state from #top-5-types to #all-types
-				document.querySelectorAll("#top-5-types input[type='checkbox']").forEach((checkbox, index) => {
-					const allCheckboxes = document.querySelectorAll("#all-types input[type='checkbox']");
-					if (allCheckboxes[index]) {
-						allCheckboxes[index].checked = checkbox.checked;
-					}
-				});
-
-				// Show all and hide top-5-types
-				document.querySelector("#top-5-types").classList.add("hidden");
-				document.querySelector("#all-types").classList.remove("hidden");
-			});
-		}
-
-		const showLessTypes = document.querySelector("#show-less-types");
-
-		if (showLessTypes) {
-			showLessTypes.addEventListener("click", function (e) {
-				// Copy checked state from #all-types to #top-5-types
-				document.querySelectorAll("#all-types input[type='checkbox']").forEach((checkbox, index) => {
-					const topCheckboxes = document.querySelectorAll("#top-5-types input[type='checkbox']");
-					if (topCheckboxes[index]) {
-						topCheckboxes[index].checked = checkbox.checked;
-					}
-				});
-
-				// Show top-5 and hide all
-				document.querySelector("#top-5-types").classList.remove("hidden");
-				document.querySelector("#all-types").classList.add("hidden");
-			});
-		}
-	</script>
-
-	<script type="text/javascript">
-		const showMoreIngredients = document.querySelector("#show-more-ingredients");
-
-		if (showMoreIngredients) {
-			showMoreIngredients.addEventListener("click", function (e) {
-				// Copy checked state from #top-5-ingredients to #all-ingredients
-				document.querySelectorAll("#top-5-ingredients input[type='checkbox']").forEach((checkbox, index) => {
-					const allCheckboxes = document.querySelectorAll("#all-ingredients input[type='checkbox']");
-					if (allCheckboxes[index]) {
-						allCheckboxes[index].checked = checkbox.checked;
-					}
-				});
-
-				// Show all and hide top-5-ingredients
-				document.querySelector("#top-5-ingredients").classList.add("hidden");
-				document.querySelector("#all-ingredients").classList.remove("hidden");
-			});
-		}
-
-		const showLessIngredients = document.querySelector("#show-less-ingredients");
-
-		if (showLessIngredients) {
-			showLessIngredients.addEventListener("click", function (e) {
-				// Copy checked state from #all-ingredients to #top-5-ingredients
-				document.querySelectorAll("#all-ingredients input[type='checkbox']").forEach((checkbox, index) => {
-					const topCheckboxes = document.querySelectorAll("#top-5-ingredients input[type='checkbox']");
-					if (topCheckboxes[index]) {
-						topCheckboxes[index].checked = checkbox.checked;
-					}
-				});
-
-				// Show top-5 and hide all
-				document.querySelector("#top-5-ingredients").classList.remove("hidden");
-				document.querySelector("#all-ingredients").classList.add("hidden");
-			});
+		function toggleText(link) {
+			link.textContent = link.textContent.trim() === "Покажи повече" ? "Скрий" : "Покажи повече";
 		}
 	</script>
 }
