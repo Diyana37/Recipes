@@ -233,7 +233,7 @@ namespace Recipes.Services
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.dbContext.Recipes
                 .OrderByDescending(r => r.Id)
-                .Take(10)
+                .Take(5)
                 .Include(r => r.RecipeType)
                 .Include(r => r.RecipeNationality)
                 .Include(r => r.Category)
@@ -272,7 +272,7 @@ namespace Recipes.Services
         {
             IEnumerable<RecipeViewModel> recipeViewModels = await this.dbContext.Recipes
                 .OrderByDescending(r => Guid.NewGuid())
-                .Take(10)
+                .Take(5)
                 .Include(r => r.RecipeType)
                 .Include(r => r.RecipeNationality)
                 .Include(r => r.Category)

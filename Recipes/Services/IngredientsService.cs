@@ -51,6 +51,7 @@ namespace Recipes.Services
         public async Task<IEnumerable<IngredientViewModel>> GetAllAsync()
         {
             IEnumerable<IngredientViewModel> ingredientViewModels = await this.dbContext.Ingredients
+                .OrderBy(i => i.Name.ToLower())
                 .Select(i => new IngredientViewModel
                 {
                     Id = i.Id,

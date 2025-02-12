@@ -368,6 +368,31 @@ namespace Recipes.Seeders
             RecipeType recipeType4 = await dbContext.RecipeTypes.FirstOrDefaultAsync(t => t.Name == "Рецепти за романтична вечеря");
             RecipeNationality recipeNationality4 = await dbContext.RecipeNationalities.FirstOrDefaultAsync(n => n.Name == "Китайска");
 
+            //sixth recipe
+            Category category5 = await dbContext.Categories.FirstOrDefaultAsync(c => c.Name == "Фитнес и здравословни");
+            RecipeType recipeType5 = await dbContext.RecipeTypes.FirstOrDefaultAsync(t => t.Name == "Бързи рецепти (до 30 минути)");
+            RecipeNationality recipeNationality5 = await dbContext.RecipeNationalities.FirstOrDefaultAsync(n => n.Name == "Японска");
+
+            //seventh recipe
+            Category category6 = await dbContext.Categories.FirstOrDefaultAsync(c => c.Name == "Месни");
+            RecipeType recipeType6 = await dbContext.RecipeTypes.FirstOrDefaultAsync(t => t.Name == "Ястия на фурна");
+            RecipeNationality recipeNationality6 = await dbContext.RecipeNationalities.FirstOrDefaultAsync(n => n.Name == "Италианска");
+
+            //eighth recipe
+            Category category7 = await dbContext.Categories.FirstOrDefaultAsync(c => c.Name == "Празнични и специални поводи");
+            RecipeType recipeType7 = await dbContext.RecipeTypes.FirstOrDefaultAsync(t => t.Name == "Ястия на фурна");
+            RecipeNationality recipeNationality7 = await dbContext.RecipeNationalities.FirstOrDefaultAsync(n => n.Name == "Българска");
+
+            //ninth recipe
+            Category category8 = await dbContext.Categories.FirstOrDefaultAsync(c => c.Name == "Улична храна");
+            RecipeType recipeType8 = await dbContext.RecipeTypes.FirstOrDefaultAsync(t => t.Name == "Рецепти за студенти");
+            RecipeNationality recipeNationality8 = await dbContext.RecipeNationalities.FirstOrDefaultAsync(n => n.Name == "Американска");
+
+            //tenth recipe
+            Category category9 = await dbContext.Categories.FirstOrDefaultAsync(c => c.Name == "Напитки");
+            RecipeType recipeType9 = await dbContext.RecipeTypes.FirstOrDefaultAsync(t => t.Name == "Рецепти от 3 стъпки");
+            RecipeNationality recipeNationality9 = await dbContext.RecipeNationalities.FirstOrDefaultAsync(n => n.Name == "Френска");
+
             if (category == null || recipeType == null || recipeNationality == null)
             {
                 return;
@@ -395,7 +420,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Спагети"
+                                Name = "Спагети"
                             },
                             Quantity = "1 пакет"
                         },
@@ -403,7 +428,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Кисело мляко"
+                                Name = "Кисело мляко"
                             },
                             Quantity = "1 кофичка"
                         },
@@ -459,7 +484,7 @@ namespace Recipes.Seeders
                 },
                 new Recipe
                 {
-                    Name = "Шакшкука - яйца в доматен сос",
+                    Name = "Шакшука - яйца в доматен сос",
                     Portions = 1,
                     Photo = "https://res.cloudinary.com/du73gcrdw/image/upload/v1739269454/shakshuka_yaytsa_v_domaten_sos_2_rcnm9t.jpg",
                     PreparationTime = 10,
@@ -479,7 +504,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Чушки"
+                                Name = "Чушки"
                             },
                             Quantity = "1 бр. червена"
                         },
@@ -487,7 +512,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Чушки"
+                                Name = "Чушки"
                             },
                             Quantity = "1 бр. зелена"
                         },
@@ -603,7 +628,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Яйца"
+                                Name = "Яйца"
                             },
                             Quantity = "2 бр."
                         },
@@ -611,7 +636,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Брашно"
+                                Name = "Брашно"
                             },
                             Quantity = "2 ч.ч."
                         },
@@ -677,7 +702,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Скариди"
+                                Name = "Скариди"
                             },
                             Quantity = "500 г тигрови"
                         },
@@ -685,7 +710,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Чесън"
+                                Name = "Чесън"
                             },
                             Quantity = "6 скилидки"
                         },
@@ -761,7 +786,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Телешко месо"
+                                Name = "Телешко месо"
                             },
                             Quantity = "600 г"
                         },
@@ -769,7 +794,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name ="Вода"
+                                Name = "Вода"
                             },
                             Quantity = "20 мл."
                         },
@@ -911,6 +936,471 @@ namespace Recipes.Seeders
                         }
                     }
                 },
+                new Recipe
+                {
+                    Name = "Терияки сьомга със задушени зеленчуци",
+                    Portions = 2,
+                    Photo = "https://res.cloudinary.com/du73gcrdw/image/upload/v1739350873/main-header_cmjnnq.avif",
+                    PreparationTime = 10,
+                    CookingTime = 15,
+                    Difficulty = 4,
+                    CategoryId = category5.Id,
+                    RecipeTypeId = recipeType5.Id,
+                    RecipeNationalityId = recipeNationality5.Id,
+                    Description = "Измийте и подсушете филетата сьомга. В купа смесете соевия сос, меда, джинджифила и чесъна.\r\n\r\n" +
+                    "Мариновайте рибата за 10 минути. Загрейте тиган с малко зехтин и запечете сьомгата за около 3-4 минути от всяка страна.\r\n\r\n" +
+                    "Добавете останалата марината в тигана и оставете да се сгъсти леко. Сервирайте с гарнитура от задушени броколи и моркови.",
+                    Ingredients = new List<RecipeIngredient>()
+                    {
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Сьомга"
+                            },
+                            Quantity = "2 филета (около 200 г всяко)"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Соев сос"
+                            },
+                            Quantity = "3 с.л."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Мед"
+                            },
+                            Quantity = "1 с.л."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Джинджифил"
+                            },
+                            Quantity = "1 ч.л. настърган"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Чесън"
+                            },
+                            Quantity = "2 скилидки, нарязани на ситно"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Зехтин"
+                            },
+                            Quantity = "1 с.л."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Броколи"
+                            },
+                            Quantity = "100 г"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Моркови"
+                            },
+                            Quantity = "1 бр., нарязан на ленти"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Сусам"
+                            },
+                            Quantity = "За поръсване"
+                        }
+                    }
+                },
+                new Recipe
+                {
+                    Name = "Лазаня Болонезе",
+                    Portions = 6,
+                    Photo = "https://res.cloudinary.com/du73gcrdw/image/upload/v1739354149/1612019622_e3ue8s.webp",
+                    PreparationTime = 30,
+                    CookingTime = 60,
+                    Difficulty = 6,
+                    CategoryId = category6.Id,
+                    RecipeTypeId = recipeType6.Id,
+                    RecipeNationalityId = recipeNationality6.Id,
+                    Description = "В тиган загрейте зехтин и запържете нарязаните лук, морков и целина.\r\n\r\n" +
+                    "Добавете каймата и запържете, докато стане златиста. Добавете доматеното пюре, доматите и подправките.\r\n\r\n" +
+                    "Пригответе бешамела, като разтопите масло, добавите брашно и постепенно налеете млякото, като бъркате постоянно.\r\n\r\n" +
+                    "Редувайте кори за лазаня, сос болонезе, бешамел и настърган пармезан. Изпечете на 180°C за около 40 минути, докато стане златиста.",
+                    Ingredients = new List<RecipeIngredient>()
+                    {
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Кори за лазаня"
+                            },
+                            Quantity = "12 бр."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Телешка кайма"
+                            },
+                            Quantity = "500 г"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Лук"
+                            },
+                            Quantity = "1 глава"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Морков"
+                            },
+                            Quantity = "1 бр."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Целина"
+                            },
+                            Quantity = "1 стрък"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Доматено пюре"
+                            },
+                            Quantity = "2 с.л."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Консервирани домати"
+                            },
+                            Quantity = "400 г"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Масло"
+                            },
+                            Quantity = "50 г"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Брашно"
+                            },
+                            Quantity = "2 с.л."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Прясно мляко"
+                            },
+                            Quantity = "500 мл"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Пармезан"
+                            },
+                            Quantity = "100 г настърган"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Зехтин"
+                            },
+                            Quantity = "2 с.л."
+                        },
+                    }
+                },
+                new Recipe
+                {
+                    Name = "Великденски козунак",
+                    Portions = 8,
+                    Photo = "https://res.cloudinary.com/du73gcrdw/image/upload/v1739354421/vkusen_kozunak_na__kontsi_kbtjdu.jpg",
+                    PreparationTime = 180,
+                    CookingTime = 40,
+                    Difficulty = 10,
+                    CategoryId = category7.Id,
+                    RecipeTypeId = recipeType7.Id,
+                    RecipeNationalityId = recipeNationality7.Id,
+                    Description = "Пресейте брашното в голяма купа и направете кладенче в средата.\r\n\r\n" +
+                    "Затоплете млякото и разтворете маята заедно със захарта. Добавете 2 с.л. брашно и оставете на топло за 10-15 минути, докато се активира.\r\n\r\n" +
+                    "Разбийте яйцата със захарта, ванилията и лимоновата кора. Добавете към брашното заедно с активираната мая.\r\n\r\n" +
+                    "Замесете меко тесто, като постепенно добавяте разтопеното масло. Оставете да втаса 1,5 - 2 часа.\r\n\r\n" +
+                    "Оформете козунака, като го сплетете и сложите в намазнена форма. Оставете да втаса още 30 минути.\r\n\r\n" +
+                    "Намажете с жълтък и поръсете със захар. Печете на 180°C за около 35-40 минути.",
+                    Ingredients = new List<RecipeIngredient>()
+                    {
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Брашно"
+                            },
+                            Quantity = "1 кг"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Прясно мляко"
+                            },
+                            Quantity = "250 мл"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Мая"
+                            },
+                            Quantity = "40 г прясна (или 14 г суха)"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Захар"
+                            },
+                            Quantity = "250 г"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Яйца"
+                            },
+                            Quantity = "4 бр."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Краве масло"
+                            },
+                            Quantity = "100 г разтопено"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Ванилия"
+                            },
+                            Quantity = "1 ч.л."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Лимонова кора"
+                            },
+                            Quantity = "От 1 лимон"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Сол"
+                            },
+                            Quantity = "1/2 ч.л."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Жълтък"
+                            },
+                            Quantity = "1 бр. за намазване"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Захар"
+                            },
+                            Quantity = "За поръсване"
+                        }
+    }
+                },
+                new Recipe
+                {
+                    Name = "Американски чийзбургер",
+                    Portions = 2,
+                    Photo = "https://res.cloudinary.com/du73gcrdw/image/upload/v1739362803/CHEESEBURGERS-S-07_xp83c9.jpg",
+                    PreparationTime = 10,
+                    CookingTime = 15,
+                    Difficulty = 3,
+                    CategoryId = category8.Id,
+                    RecipeTypeId = recipeType8.Id,
+                    RecipeNationalityId = recipeNationality8.Id,
+                    Description = "Оформете две плоски телешки кюфтета и подправете със сол и черен пипер.\r\n\r\n" +
+                    "Запечете на грил тиган или барбекю за 3-4 минути на страна.\r\n\r\n" +
+                    "Добавете резен сирене чедър върху горещото кюфте и покрийте за 30 секунди, докато се разтопи.\r\n\r\n" +
+                    "Запечете разрязаните питки на тигана за 30 секунди.\r\n\r\n" +
+                    "Сглобете бургерите с маруля, домат, кисели краставички и майонеза.",
+                    Ingredients = new List<RecipeIngredient>()
+                    {
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Телешка кайма"
+                            },
+                            Quantity = "300 г"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Чедър"
+                            },
+                            Quantity = "2 резена"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Хлебчета за бургер"
+                            },
+                            Quantity = "2 бр."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Маруля"
+                            },
+                            Quantity = "2 листа"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Домат"
+                            },
+                            Quantity = "2 резена"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Кисели краставички"
+                            },
+                            Quantity = "4 резена"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Майонеза"
+                            },
+                            Quantity = "2 с.л."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Сол"
+                            },
+                            Quantity = "На вкус"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Черен пипер"
+                            },
+                            Quantity = "На вкус"
+                        }
+                    }
+                },
+                new Recipe
+                {
+                    Name = "Домашна лимонада",
+                    Portions = 4,
+                    Photo = "https://res.cloudinary.com/du73gcrdw/image/upload/v1739363146/505505.640x640_kcikcz.jpg",
+                    PreparationTime = 10,
+                    CookingTime = 0,
+                    Difficulty = 1,
+                    CategoryId = category9.Id,
+                    RecipeTypeId = recipeType9.Id,
+                    RecipeNationalityId = recipeNationality9.Id,
+                    Description = "Изцедете лимоните и прецедете сока.\r\n\r\n" +
+                    "В голяма кана смесете лимоновия сок със захарта и разбъркайте, докато се разтвори напълно.\r\n\r\n" +
+                    "Добавете студената вода и кубчета лед.\r\n\r\n" +
+                    "Гарнирайте с резени лимон и свежи листа мента.",
+                    Ingredients = new List<RecipeIngredient>()
+                    {
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Лимони"
+                            },
+                            Quantity = "4 бр."
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Захар"
+                            },
+                            Quantity = "100 г"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Вода"
+                            },
+                            Quantity = "1 л"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Лед"
+                            },
+                            Quantity = "На вкус"
+                        },
+                        new RecipeIngredient
+                        {
+                            Ingredient = new Ingredient
+                            {
+                                Name = "Мента"
+                            },
+                            Quantity = "Няколко листа"
+                        }
+                    }
+                }
             };
 
             await dbContext.Recipes.AddRangeAsync(recipes);

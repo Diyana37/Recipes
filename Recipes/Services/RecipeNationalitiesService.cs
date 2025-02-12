@@ -52,6 +52,7 @@ namespace Recipes.Services
         public async Task<IEnumerable<SelectListItem>> GetAllAsItemsAsync()
         {
             IEnumerable<SelectListItem> selectListItems = await this.dbContext.RecipeNationalities
+                .OrderBy(r => r.Name.ToLower())
                 .Select(i => new SelectListItem
                 {
                     Value = i.Id.ToString(),
@@ -65,6 +66,7 @@ namespace Recipes.Services
         public async Task<IEnumerable<RecipeNationalityViewModel>> GetAllAsync()
         {
             IEnumerable<RecipeNationalityViewModel> recipeNationalitiesViewModels = await this.dbContext.RecipeNationalities
+                .OrderBy(r => r.Name.ToLower())
                 .Select(r => new RecipeNationalityViewModel
                 {
                     Id = r.Id,
