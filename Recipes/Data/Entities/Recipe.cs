@@ -1,5 +1,4 @@
-﻿using Humanizer.Localisation;
-using Recipes.Data.Entities.Identity;
+﻿using Recipes.Data.Entities.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace Recipes.Data.Entities
@@ -22,19 +21,15 @@ namespace Recipes.Data.Entities
         public string Description { get; set; }
         
         [Required]
-        [Range(3, 1000)]
         public int PreparationTime { get; set; }
 
         [Required]
-        [Range(3, 1000)]
         public int CookingTime { get; set; }
 
         [Required]
-        [Range(1, 100)]
         public int Portions { get; set; }
 
         [Required]
-        [Range(1, 10)]
         public int Difficulty { get; set; }
 
         [Url]

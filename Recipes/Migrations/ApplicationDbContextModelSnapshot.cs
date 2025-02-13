@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Recipes.Data;
 
 #nullable disable
 
-namespace Recipes.Data.Migrations
+namespace Recipes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250204091822_AddedApplicationUser")]
-    partial class AddedApplicationUser
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,9 +189,6 @@ namespace Recipes.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomTag")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -280,10 +274,12 @@ namespace Recipes.Data.Migrations
                     b.Property<int>("CookingTime")
                         .HasColumnType("int");
 
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Difficulty")
                         .HasColumnType("int");
@@ -312,11 +308,22 @@ namespace Recipes.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("CreatorId");
+
                     b.HasIndex("RecipeNationalityId");
 
                     b.HasIndex("RecipeTypeId");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", t =>
+                        {
+                            t.HasCheckConstraint("CHK_Recipe_CookingTime", "[CookingTime] BETWEEN 0 AND 1000");
+
+                            t.HasCheckConstraint("CHK_Recipe_Difficulty", "[Difficulty] BETWEEN 1 AND 10");
+
+                            t.HasCheckConstraint("CHK_Recipe_Portions", "[Portions] BETWEEN 1 AND 100");
+
+                            t.HasCheckConstraint("CHK_Recipe_PreparationTime", "[PreparationTime] BETWEEN 0 AND 1000");
+                        });
                 });
 
             modelBuilder.Entity("Recipes.Data.Entities.RecipeIngredient", b =>
@@ -442,6 +449,10 @@ namespace Recipes.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Recipes.Data.Entities.Identity.ApplicationUser", "Creator")
+                        .WithMany("Recipes")
+                        .HasForeignKey("CreatorId");
+
                     b.HasOne("Recipes.Data.Entities.RecipeNationality", "RecipeNationality")
                         .WithMany("Recipes")
                         .HasForeignKey("RecipeNationalityId")
@@ -455,6 +466,8 @@ namespace Recipes.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Creator");
 
                     b.Navigation("RecipeNationality");
 
@@ -481,6 +494,11 @@ namespace Recipes.Data.Migrations
                 });
 
             modelBuilder.Entity("Recipes.Data.Entities.Category", b =>
+                {
+                    b.Navigation("Recipes");
+                });
+
+            modelBuilder.Entity("Recipes.Data.Entities.Identity.ApplicationUser", b =>
                 {
                     b.Navigation("Recipes");
                 });

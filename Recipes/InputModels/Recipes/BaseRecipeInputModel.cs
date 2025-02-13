@@ -18,19 +18,19 @@ namespace Recipes.InputModels.Recipes
         public string Ingredients { get; set; }
 
         [Required(ErrorMessage = "Времето за приготвяне е задължително!")]
-        [Range(3, 1000, ErrorMessage = "Времето за приготвяне трябва да е между 3 и 1000 символа!")]
+        [Range(0, 1000, ErrorMessage = "Времето за приготвяне трябва да е между 0 и 1000!")]
         public int PreparationTime { get; set; }
 
         [Required(ErrorMessage = "Времето за готвене е задължително!")]
-        [Range(3, 1000, ErrorMessage = "Времето за готвене трябва да е между 3 и 1000 символа!")]
+        [Range(0, 1000, ErrorMessage = "Времето за готвене трябва да е между 0 и 1000!")]
         public int CookingTime { get; set; }
 
         [Required(ErrorMessage = "Порциите са задължителни!")]
-        [Range(1, 100, ErrorMessage = "Порциите трябва да са между 1 и 100 символа!")]
+        [Range(1, 100, ErrorMessage = "Порциите трябва да са между 1 и 100!")]
         public int Portions { get; set; }
 
         [Required(ErrorMessage = "Трудността е задължителна!")]
-        [Range(1, 10, ErrorMessage = "Трудността трябва да е между 1 и 10 символа!")]
+        [Range(1, 10, ErrorMessage = "Трудността трябва да е между 1 и 10!")]
         public int Difficulty { get; set; }
 
         public IFormFile FormFile { get; set; }
