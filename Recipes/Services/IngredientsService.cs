@@ -17,6 +17,14 @@ namespace Recipes.Services
         }
         public async Task CreateAsync(CreateIngredientInputModel createIngredientInputModel)
         {
+            bool isCreated = await this.dbContext.Ingredients
+                .AnyAsync(i => i.Name.ToLower() == createIngredientInputModel.Name.ToLower());
+
+            if (isCreated)
+            {
+                return;
+            }
+
             Ingredient ingredient = new Ingredient
             {
                 Name = createIngredientInputModel.Name,
@@ -40,6 +48,15 @@ namespace Recipes.Services
         {
             Ingredient ingredient = await this.dbContext.Ingredients
                             .FirstOrDefaultAsync(i => i.Id == editIngredientInputModel.Id);
+
+            bool isCreated = await this.dbContext.Ingredients
+                .AnyAsync(i => i.Name.ToLower() == editIngredientInputModel.Name.ToLower() 
+                && i.Id != ingredient.Id);
+
+            if (isCreated)
+            {
+                return;
+            }
 
             ingredient.Name = editIngredientInputModel.Name;
 

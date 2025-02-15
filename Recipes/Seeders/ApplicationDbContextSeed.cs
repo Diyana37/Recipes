@@ -536,7 +536,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name = "Магданоз "
+                                Name = "Магданоз"
                             },
                             Quantity = "1/4 вр."
                         },
@@ -544,7 +544,7 @@ namespace Recipes.Seeders
                         {
                             Ingredient = new Ingredient
                             {
-                                Name = "Яйца "
+                                Name = "Яйца"
                             },
                             Quantity = "4 бр."
                         },
